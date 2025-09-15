@@ -55,6 +55,21 @@ serve(async (req) => {
     // Step 1: Enhanced content extraction with fallback
     let content = '';
     
+    // Validate URL format
+    try {
+      new URL(url);
+    } catch (urlError) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Invalid URL format',
+        url: url,
+        details: 'Please provide a valid URL starting with http:// or https://'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
     try {
       // Try Firecrawl first
       const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
@@ -121,7 +136,19 @@ serve(async (req) => {
 
     } catch (extractionError) {
       console.error('Content extraction failed:', extractionError);
-      throw new Error('Unable to access or extract content from the website');
+      console.error('URL attempted:', url);
+      console.error('Error details:', extractionError.message);
+      
+      // Return a more informative error
+      return new Response(JSON.stringify({
+        success: false,
+        error: `Unable to access or extract content from the website: ${extractionError.message}`,
+        url: url,
+        details: 'Please check if the URL is accessible and try again'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Step 2: Advanced AI Analysis with GPT-5 using maturity data
