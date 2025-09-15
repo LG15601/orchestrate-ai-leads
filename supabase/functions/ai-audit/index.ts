@@ -151,11 +151,12 @@ serve(async (req) => {
 
     MÉTHODOLOGIE D'ANALYSE (niveau cabinet de conseil):
 
-    1. ANALYSE STRATÉGIQUE DE L'ENTREPRISE:
-    - Modèle économique et chaîne de valeur
-    - Positionnement concurrentiel et différenciation
-    - Maturité digitale actuelle
-    - Structure organisationnelle et processus clés
+    1. ANALYSE STRATÉGIQUE DE L'ENTREPRISE (PERSONNALISÉE):
+    - Modèle économique et chaîne de valeur spécifiques à cette entreprise
+    - Positionnement concurrentiel et différenciation dans leur secteur
+    - Maturité digitale actuelle et défis spécifiques identifiés
+    - Structure organisationnelle et processus clés analysés en détail
+    - Proposition de valeur unique et avantages concurrentiels actuels
 
     2. IDENTIFICATION DES LEVIERS D'OPTIMISATION:
     - Processus à forte valeur ajoutée vs tâches répétitives
@@ -167,6 +168,12 @@ serve(async (req) => {
     - Agents IA prioritaires avec impact business mesurable
     - Roadmap d'implémentation avec ROI précis
     - Risques et mitigation
+
+    INSIGHTS STRATÉGIQUES PERSONNALISÉS REQUIS:
+    - Analyser le positionnement concurrentiel spécifique de cette entreprise
+    - Identifier les défis uniques de leur secteur et de leur taille
+    - Proposer des solutions d'automatisation adaptées à leur modèle économique
+    - Expliquer comment l'IA peut renforcer leur proposition de valeur
     - Avantage concurrentiel durable
 
     RÉPONDS UNIQUEMENT EN JSON VALIDE (pas de markdown, pas de backticks):
@@ -193,7 +200,7 @@ serve(async (req) => {
       ],
       "roi_estimate": "estimation ROI précise avec justification business",
       "time_saved": "X-Y heures/semaine économisées",
-      "strategic_insights": "3 insights stratégiques clés sur les opportunités d'automatisation",
+      "strategic_insights": "3 insights stratégiques personnalisés analysant le positionnement concurrentiel, le modèle économique et les défis spécifiques de cette entreprise",
       "competitive_advantage": "Avantage concurrentiel durable via l'automatisation",
       "implementation_roadmap": [
         "Phase 1: Contact & Analyse (48h) - Rappel sous 48h pour planifier votre stratégie d'automatisation personnalisée",

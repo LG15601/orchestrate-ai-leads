@@ -100,48 +100,40 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
         </p>
       </div>
 
-      {/* KPIs Principaux - Design cohérent avec le site */}
+      {/* KPIs Principaux - Design simplifié et robuste */}
       <div className="grid lg:grid-cols-4 gap-6 mb-16">
-        <Card className="card-bold bg-black text-white text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <CardContent className="p-8">
-            <div className="text-6xl font-bold mb-4">{auditResult.score}%</div>
-            <h3 className="text-xl font-bold mb-2 text-accent-warning">Potentiel d'Automatisation</h3>
-            <p className="text-white/80 font-medium">Score d'opportunités identifiées</p>
-          </CardContent>
-        </Card>
+        <div className="bg-black text-white text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-6xl font-bold mb-4">{auditResult.score}%</div>
+          <h3 className="text-xl font-bold mb-2 text-accent-warning">Potentiel d'Automatisation</h3>
+          <p className="text-white/80 font-medium">Score d'opportunités identifiées</p>
+        </div>
 
-        <Card className="card-bold bg-accent-success text-white text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <CardContent className="p-8">
-            <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-              <TrendingUp className="w-12 h-12 mr-2" />
-              {auditResult.roi_estimate}
-            </div>
-            <h3 className="text-xl font-bold mb-2">ROI Estimé</h3>
-            <p className="text-white/80 font-medium">Amélioration des marges</p>
-          </CardContent>
-        </Card>
+        <div className="bg-accent-success text-white text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-6xl font-bold mb-4 flex items-center justify-center">
+            <TrendingUp className="w-12 h-12 mr-2" />
+            {auditResult.roi_estimate}
+          </div>
+          <h3 className="text-xl font-bold mb-2">ROI Estimé</h3>
+          <p className="text-white/80 font-medium">Amélioration des marges</p>
+        </div>
 
-        <Card className="card-bold bg-accent-warning text-black text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <CardContent className="p-8">
-            <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-              <Clock className="w-12 h-12 mr-2" />
-              {auditResult.time_saved}
-            </div>
-            <h3 className="text-xl font-bold mb-2">Temps Économisé</h3>
-            <p className="text-black/80 font-medium">Par semaine avec l'automatisation</p>
-          </CardContent>
-        </Card>
+        <div className="bg-accent-warning text-black text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-6xl font-bold mb-4 flex items-center justify-center">
+            <Clock className="w-12 h-12 mr-2" />
+            {auditResult.time_saved}
+          </div>
+          <h3 className="text-xl font-bold mb-2">Temps Économisé</h3>
+          <p className="text-black/80 font-medium">Par semaine avec l'automatisation</p>
+        </div>
 
-        <Card className="card-bold bg-accent-blue text-white text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <CardContent className="p-8">
-            <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-              <Bot className="w-12 h-12 mr-2" />
-              {auditResult.specialized_agents?.length || 0}
-            </div>
-            <h3 className="text-xl font-bold mb-2">Agents IA Recommandés</h3>
-            <p className="text-white/80 font-medium">Spécialisés pour votre entreprise</p>
-          </CardContent>
-        </Card>
+        <div className="bg-accent-blue text-white text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-6xl font-bold mb-4 flex items-center justify-center">
+            <Bot className="w-12 h-12 mr-2" />
+            {auditResult.specialized_agents?.length || 0}
+          </div>
+          <h3 className="text-xl font-bold mb-2">Agents IA Recommandés</h3>
+          <p className="text-white/80 font-medium">Spécialisés pour votre entreprise</p>
+        </div>
       </div>
 
       {/* Profil de l'entreprise - Simplifié */}
@@ -202,55 +194,55 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
             {auditResult.specialized_agents?.map((agent, index) => {
               const AgentIcon = getAgentIcon(agent.name);
               return (
-              <div key={index} className="bg-accent-blue/5 border-2 border-accent-blue rounded-lg p-8 shadow-[2px_2px_0px_#000000]">
-                <div className="flex items-start gap-6">
-                  <div className="w-16 h-16 bg-accent-blue rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
-                    <AgentIcon className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-2xl font-bold text-black mb-2">{agent.name}</h4>
-                    <p className="text-accent-blue font-bold text-lg mb-3">{agent.business_impact}</p>
-                    <p className="text-black font-medium mb-4">{agent.role}</p>
-                    
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <h5 className="font-bold text-black mb-3">Tâches critiques automatisées :</h5>
-                        <ul className="space-y-2">
-                          {agent.key_tasks?.map((task, taskIndex) => (
-                            <li key={taskIndex} className="text-black font-medium flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-accent-success" />
-                              {task}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                <div key={index} className="bg-accent-blue/5 border-2 border-accent-blue rounded-lg p-8 shadow-[2px_2px_0px_#000000]">
+                  <div className="flex items-start gap-6">
+                    <div className="w-16 h-16 bg-accent-blue rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
+                      <AgentIcon className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-2xl font-bold text-black mb-2">{agent.name}</h4>
+                      <p className="text-accent-blue font-bold text-lg mb-3">{agent.business_impact}</p>
+                      <p className="text-black font-medium mb-4">{agent.role}</p>
                       
-                      <div>
-                        <h5 className="font-bold text-black mb-3">Intégrations métier :</h5>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {agent.integrations?.map((integration, intIndex) => (
-                            <Badge key={intIndex} variant="outline" className="border-2 border-black">
-                              {integration}
-                            </Badge>
-                          ))}
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                          <h5 className="font-bold text-black mb-3">Tâches critiques automatisées :</h5>
+                          <ul className="space-y-2">
+                            {agent.key_tasks?.map((task, taskIndex) => (
+                              <li key={taskIndex} className="text-black font-medium flex items-center gap-2">
+                                <CheckCircle className="w-4 h-4 text-accent-success" />
+                                {task}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="bg-accent-warning/20 border-2 border-accent-warning rounded-lg p-4">
-                            <p className="text-sm font-bold text-black">
-                              ⏰ {agent.time_saved}
-                            </p>
+                        
+                        <div>
+                          <h5 className="font-bold text-black mb-3">Intégrations métier :</h5>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {agent.integrations?.map((integration, intIndex) => (
+                              <Badge key={intIndex} variant="outline" className="border-2 border-black">
+                                {integration}
+                              </Badge>
+                            ))}
                           </div>
-                          <div className="bg-accent-success/20 border-2 border-accent-success rounded-lg p-4">
-                            <p className="text-sm font-bold text-black">
-                              📈 {agent.roi_timeline}
-                            </p>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-accent-warning/20 border-2 border-accent-warning rounded-lg p-4">
+                              <p className="text-sm font-bold text-black">
+                                ⏰ {agent.time_saved}
+                              </p>
+                            </div>
+                            <div className="bg-accent-success/20 border-2 border-accent-success rounded-lg p-4">
+                              <p className="text-sm font-bold text-black">
+                                📈 {agent.roi_timeline}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               );
             })}
           </div>
