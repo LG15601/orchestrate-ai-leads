@@ -100,39 +100,39 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
         </p>
       </div>
 
-      {/* KPIs Principaux - Taille réduite */}
-      <div className="grid lg:grid-cols-4 gap-4 mb-12">
-        <div className="bg-black text-white text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-4xl font-bold mb-3">{auditResult.score}%</div>
-          <h3 className="text-lg font-bold mb-2 text-accent-warning">Potentiel d'Automatisation</h3>
-          <p className="text-white/80 font-medium text-sm">Score d'opportunités identifiées</p>
+      {/* KPIs Principaux - Taille encore plus réduite */}
+      <div className="grid lg:grid-cols-4 gap-3 mb-10">
+        <div className="bg-black text-white text-center p-4 rounded-lg border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-3xl font-bold mb-2">{auditResult.score}%</div>
+          <h3 className="text-base font-bold mb-1 text-accent-warning">Potentiel d'Automatisation</h3>
+          <p className="text-white/80 font-medium text-xs">Score d'opportunités identifiées</p>
         </div>
 
-        <div className="bg-accent-success text-white text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-4xl font-bold mb-3 flex items-center justify-center">
-            <TrendingUp className="w-8 h-8 mr-2" />
+        <div className="bg-accent-success text-white text-center p-4 rounded-lg border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-3xl font-bold mb-2 flex items-center justify-center">
+            <TrendingUp className="w-6 h-6 mr-1" />
             {auditResult.roi_estimate}
           </div>
-          <h3 className="text-lg font-bold mb-2">ROI Estimé</h3>
-          <p className="text-white/80 font-medium text-sm">Amélioration des marges</p>
+          <h3 className="text-base font-bold mb-1">ROI Estimé</h3>
+          <p className="text-white/80 font-medium text-xs">Amélioration des marges</p>
         </div>
 
-        <div className="bg-accent-warning text-black text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-4xl font-bold mb-3 flex items-center justify-center">
-            <Clock className="w-8 h-8 mr-2" />
+        <div className="bg-accent-warning text-black text-center p-4 rounded-lg border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-3xl font-bold mb-2 flex items-center justify-center">
+            <Clock className="w-6 h-6 mr-1" />
             {auditResult.time_saved}
           </div>
-          <h3 className="text-lg font-bold mb-2">Temps Économisé</h3>
-          <p className="text-black/80 font-medium text-sm">Par semaine avec l'automatisation</p>
+          <h3 className="text-base font-bold mb-1">Temps Économisé</h3>
+          <p className="text-black/80 font-medium text-xs">Par semaine avec l'automatisation</p>
         </div>
 
-        <div className="bg-accent-blue text-white text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-4xl font-bold mb-3 flex items-center justify-center">
-            <Bot className="w-8 h-8 mr-2" />
+        <div className="bg-accent-blue text-white text-center p-4 rounded-lg border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-3xl font-bold mb-2 flex items-center justify-center">
+            <Bot className="w-6 h-6 mr-1" />
             {auditResult.specialized_agents?.length || 0}
           </div>
-          <h3 className="text-lg font-bold mb-2">Agents IA Recommandés</h3>
-          <p className="text-white/80 font-medium text-sm">Spécialisés pour votre entreprise</p>
+          <h3 className="text-base font-bold mb-1">Agents IA Recommandés</h3>
+          <p className="text-white/80 font-medium text-xs">Spécialisés pour votre entreprise</p>
         </div>
       </div>
 
@@ -387,22 +387,22 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
       </Card>
 
       {/* Call to Actions */}
-      <Card className="card-bold bg-black text-white p-12">
+      <Card className="card-bold bg-black text-white p-8">
         <CardContent className="text-center">
-          <h3 className="text-4xl font-bold mb-6 text-accent-warning">🚀 Prêt à transformer votre entreprise ?</h3>
-          <p className="mb-10 text-white font-medium text-xl max-w-3xl mx-auto">
+          <h3 className="text-3xl font-bold mb-4 text-accent-warning">🚀 Prêt à transformer votre entreprise ?</h3>
+          <p className="mb-6 text-white font-medium text-base max-w-3xl mx-auto">
             Obtenez votre stratégie d'automatisation complète et planifiez votre succès avec nos agents IA spécialisés
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               onClick={() => window.open('https://cal.com/getrepeat', '_blank')}
-              className="bg-accent-warning text-black hover:bg-accent-warning/90 font-bold text-xl px-10 py-6 border-2 border-white shadow-[4px_4px_0px_#ffffff] hover:shadow-[6px_6px_0px_#ffffff] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
+              className="bg-accent-warning text-black hover:bg-accent-warning/90 font-bold text-base px-6 py-3 border-2 border-white shadow-[4px_4px_0px_#ffffff] hover:shadow-[6px_6px_0px_#ffffff] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
             >
               📅 Réserver une Démo Gratuite
             </Button>
             <Button 
               onClick={onNewAnalysis}
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold text-xl px-10 py-6 shadow-[4px_4px_0px_#ffffff] hover:shadow-[6px_6px_0px_#ffffff] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold text-base px-6 py-3 shadow-[4px_4px_0px_#ffffff] hover:shadow-[6px_6px_0px_#ffffff] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
             >
               🔄 Nouvelle Analyse
             </Button>
