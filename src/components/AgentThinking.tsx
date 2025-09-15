@@ -99,37 +99,37 @@ export const AgentThinking = ({ currentStep, progress, isAnalyzing }: AgentThink
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* En-tête de l'agent */}
-      <Card className="border-2 border-black shadow-[4px_4px_0px_#000000] bg-gradient-to-r from-blue-50 to-purple-50">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
-              <Bot className="w-8 h-8 text-white" />
+      <Card className="card-bold bg-white">
+        <CardContent className="p-8">
+          <div className="flex items-center gap-6">
+            <div className="w-20 h-20 bg-accent-blue rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
+              <Bot className="w-10 h-10 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-black">Agent IA Expert</h3>
-              <p className="text-gray-600 font-medium">Analyse en cours de votre entreprise</p>
+              <h3 className="text-3xl font-bold text-black">Consultant IA Expert</h3>
+              <p className="text-gray-600 font-medium text-lg">Analyse stratégique en cours de votre entreprise</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Barre de progression */}
-      <Card className="border-2 border-black shadow-[4px_4px_0px_#000000]">
-        <CardContent className="p-6">
-          <div className="space-y-4">
+      <Card className="card-bold bg-white">
+        <CardContent className="p-8">
+          <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <span className="font-bold text-black">Progression de l'analyse</span>
-              <Badge variant="outline" className="border-2 border-black">
+              <span className="font-bold text-black text-lg">Progression de l'analyse stratégique</span>
+              <Badge variant="outline" className="border-2 border-black text-lg px-4 py-2">
                 {progress}%
               </Badge>
             </div>
-            <div className="w-full bg-gray-200 border-2 border-black rounded-full h-4 overflow-hidden">
+            <div className="w-full bg-background border-2 border-black rounded-lg h-6 overflow-hidden shadow-[2px_2px_0px_#000000]">
               <div 
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-500 ease-out"
+                className="h-full bg-accent-success transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="text-sm text-gray-600 font-medium">
+            <p className="text-black font-medium text-lg">
               {currentStep}
             </p>
           </div>
@@ -137,16 +137,16 @@ export const AgentThinking = ({ currentStep, progress, isAnalyzing }: AgentThink
       </Card>
 
       {/* Réflexion de l'agent */}
-      <Card className="border-2 border-black shadow-[4px_4px_0px_#000000] bg-gradient-to-r from-yellow-50 to-orange-50">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
-              <Brain className="w-6 h-6 text-white" />
+      <Card className="card-bold bg-accent-warning/10">
+        <CardContent className="p-8">
+          <div className="flex items-start gap-6">
+            <div className="w-16 h-16 bg-accent-warning rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
+              <Brain className="w-8 h-8 text-black" />
             </div>
             <div className="flex-1">
-              <h4 className="font-bold text-black mb-2">Réflexion de l'agent IA</h4>
-              <div className="bg-white border-2 border-black rounded-lg p-4 shadow-[2px_2px_0px_#000000]">
-                <p className="text-black font-medium">
+              <h4 className="font-bold text-black mb-4 text-xl">Réflexion du consultant expert</h4>
+              <div className="bg-white border-2 border-black rounded-lg p-6 shadow-[2px_2px_0px_#000000]">
+                <p className="text-black font-medium text-lg">
                   {thinkingText}
                   <span className="animate-pulse">|</span>
                 </p>

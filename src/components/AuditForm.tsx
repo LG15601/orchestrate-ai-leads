@@ -28,44 +28,36 @@ import MaturityQuestions from "./MaturityQuestions";
 import AuditSteps from "./AuditSteps";
 import ValueProposition from "./ValueProposition";
 import { AgentThinking } from "./AgentThinking";
-import { EnhancedAuditResults } from "./EnhancedAuditResults";
-
-interface JobPosition {
-  administration: string[];
-  commercial: string[];
-  marketing: string[];
-  service_client: string[];
-  production: string[];
-  rh: string[];
-  comptabilite: string[];
-  technique: string[];
-}
+import { ExpertAuditResults } from "./ExpertAuditResults";
 
 interface SpecializedAgent {
   name: string;
+  business_impact: string;
   role: string;
-  tasks: string[];
+  key_tasks: string[];
   time_saved: string;
   integrations: string[];
+  roi_timeline: string;
 }
 
 interface AuditResult {
   score: number;
   company_name: string;
   sector: string;
+  business_model: string;
   team_size: string;
-  technologies: string[];
-  job_positions: JobPosition;
+  current_maturity: string;
+  key_processes: string[];
   pain_points: string[];
-  time_consuming_tasks: string[];
   automation_opportunities: string[];
   specialized_agents: SpecializedAgent[];
   roi_estimate: string;
   time_saved: string;
-  analysis_summary: string;
+  strategic_insights: string;
   competitive_advantage: string;
   implementation_roadmap: string[];
   risk_assessment: string;
+  success_metrics: string[];
 }
 
 const AuditForm = () => {
@@ -236,7 +228,7 @@ const AuditForm = () => {
           <AuditSteps currentStep={4} />
           <section className="py-20 bg-background" id="audit-form">
             <div className="container mx-auto px-6">
-              <EnhancedAuditResults 
+              <ExpertAuditResults 
                 auditResult={auditResult} 
                 onNewAnalysis={handleNewAnalysis}
               />

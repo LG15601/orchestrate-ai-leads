@@ -139,99 +139,77 @@ serve(async (req) => {
     const possibleCompanyName = domainParts[0];
 
     const analysisPrompt = `
-    Tu es un expert en automatisation d'entreprise avec 20+ ans d'expérience, spécialisé dans l'analyse des postes de travail et l'implémentation d'agents IA spécialisés. 
+    Tu es un consultant senior en transformation digitale, ancien associé chez McKinsey & Company, avec 25 ans d'expérience dans l'optimisation des processus métier et l'implémentation d'IA en entreprise. Tu as accompagné plus de 500 entreprises dans leur transformation digitale.
 
-    MISSION: Analyser cette entreprise française pour identifier TOUS les postes de travail et déterminer quelles tâches chronophages peuvent être automatisées par des agents IA spécialisés.
+    MISSION CRITIQUE: Conduire une analyse stratégique approfondie de cette entreprise pour identifier les opportunités d'automatisation les plus impactantes et les agents IA spécialisés qui peuvent transformer leur business.
 
     DONNÉES À ANALYSER:
     URL: ${url}
     DOMAIN: ${domain}
-    CONTENU DU SITE: ${content.slice(0, 15000)}
+    CONTENU DU SITE: ${content.slice(0, 20000)}
     ${maturityContext}
 
-    INSTRUCTIONS CRITIQUES:
-    1. EXTRACT le nom exact de l'entreprise depuis le contenu (pas juste le domaine)
-    2. IDENTIFIE tous les postes de travail possibles dans cette entreprise
-    3. ANALYSE chaque tâche chronophage qui peut être automatisée
-    4. RECOMMANDE des agents IA spécialisés pour chaque poste
-    5. SOIS SPÉCIFIQUE à cette entreprise, pas générique
-    6. RÉPONDS UNIQUEMENT EN FRANÇAIS
+    MÉTHODOLOGIE D'ANALYSE (niveau cabinet de conseil):
 
-    FRAMEWORK D'ANALYSE DÉTAILLÉ:
+    1. ANALYSE STRATÉGIQUE DE L'ENTREPRISE:
+    - Modèle économique et chaîne de valeur
+    - Positionnement concurrentiel et différenciation
+    - Maturité digitale actuelle
+    - Structure organisationnelle et processus clés
 
-    1. IDENTIFICATION DE L'ENTREPRISE:
-    - Nom exact de l'entreprise
-    - Secteur d'activité spécifique
-    - Modèle économique (B2B, B2C, SaaS, etc.)
-    - Taille estimée de l'équipe
+    2. IDENTIFICATION DES LEVIERS D'OPTIMISATION:
+    - Processus à forte valeur ajoutée vs tâches répétitives
+    - Goulots d'étranglement opérationnels
+    - Coûts cachés et inefficacités
+    - Opportunités de croissance via l'automatisation
 
-    2. ANALYSE DES POSTES DE TRAVAIL:
-    - Administration & Gestion
-    - Commercial & Ventes  
-    - Marketing & Communication
-    - Service Client & Support
-    - Production & Opérations
-    - RH & Recrutement
-    - Comptabilité & Finance
-    - Technique & IT
-
-    3. IDENTIFICATION DES TÂCHES CHRONOPHAGES:
-    - Tâches répétitives quotidiennes
-    - Processus manuels complexes
-    - Gestion de données volumineuses
-    - Communication client répétitive
-    - Reporting et analyses
-
-    4. RECOMMANDATIONS D'AGENTS IA SPÉCIALISÉS:
-    - Agent Commercial IA (CRM, prospection, suivi)
-    - Agent Marketing IA (campagnes, contenu, analytics)
-    - Agent Service Client IA (chat, tickets, FAQ)
-    - Agent Administratif IA (planning, documents, facturation)
-    - Agent RH IA (recrutement, formation, évaluations)
-    - Agent Analytics IA (rapports, KPIs, prédictions)
+    3. RECOMMANDATIONS STRATÉGIQUES:
+    - Agents IA prioritaires avec impact business mesurable
+    - Roadmap d'implémentation avec ROI précis
+    - Risques et mitigation
+    - Avantage concurrentiel durable
 
     RÉPONDS UNIQUEMENT EN JSON VALIDE (pas de markdown, pas de backticks):
     {
-      "score": (0-100 potentiel d'automatisation),
+      "score": (0-100 potentiel d'automatisation basé sur l'analyse stratégique),
       "company_name": "nom exact de l'entreprise extrait du contenu",
-      "sector": "secteur d'activité spécifique",
+      "sector": "secteur d'activité spécifique avec sous-segment",
+      "business_model": "modèle économique identifié (B2B, B2C, marketplace, SaaS, etc.)",
       "team_size": "${maturityData?.teamSize || 'estimé depuis le contenu'}",
-      "technologies": ["technologies détectées dans le contenu"],
-      "job_positions": {
-        "administration": ["postes administratifs identifiés"],
-        "commercial": ["postes commerciaux identifiés"], 
-        "marketing": ["postes marketing identifiés"],
-        "service_client": ["postes service client identifiés"],
-        "production": ["postes production identifiés"],
-        "rh": ["postes RH identifiés"],
-        "comptabilite": ["postes comptabilité identifiés"],
-        "technique": ["postes techniques identifiés"]
-      },
-      "pain_points": ["5-7 points de friction spécifiques identifiés"],
-      "time_consuming_tasks": ["8-10 tâches chronophages identifiées avec estimation temps/semaine"],
-      "automation_opportunities": ["6-8 opportunités d'automatisation spécifiques avec agents IA recommandés"],
+      "current_maturity": "niveau de maturité digitale actuel (Débutant/Intermédiaire/Avancé)",
+      "key_processes": ["3-5 processus métier critiques identifiés"],
+      "pain_points": ["3-5 points de friction stratégiques avec impact business"],
+      "automation_opportunities": ["3-4 opportunités d'automatisation prioritaires avec impact ROI"],
       "specialized_agents": [
         {
-          "name": "Nom de l'agent IA",
-          "role": "Rôle spécifique",
-          "tasks": ["tâches automatisées"],
-          "time_saved": "X heures/semaine",
-          "integrations": ["outils connectés"]
+          "name": "Nom de l'agent IA spécialisé",
+          "business_impact": "Impact business spécifique (ex: +30% de leads qualifiés)",
+          "role": "Rôle stratégique dans l'organisation",
+          "key_tasks": ["2-3 tâches critiques automatisées"],
+          "time_saved": "X heures/semaine économisées",
+          "integrations": ["outils métier connectés"],
+          "roi_timeline": "ROI attendu en X mois"
         }
       ],
-      "roi_estimate": "estimation réaliste % avec justification",
+      "roi_estimate": "estimation ROI précise avec justification business",
       "time_saved": "X-Y heures/semaine économisées",
-      "analysis_summary": "Résumé personnalisé de 3 phrases sur les plus grandes opportunités d'automatisation",
-      "competitive_advantage": "Comment l'automatisation les aiderait spécifiquement vs concurrents",
+      "strategic_insights": "3 insights stratégiques clés sur les opportunités d'automatisation",
+      "competitive_advantage": "Avantage concurrentiel durable via l'automatisation",
       "implementation_roadmap": [
-        "Phase 1: Gains rapides - Agents IA prioritaires",
-        "Phase 2: Automatisation cœur de métier", 
-        "Phase 3: IA avancée et intégrations complètes"
+        "Phase 1: Quick wins (0-3 mois) - Impact immédiat",
+        "Phase 2: Transformation (3-12 mois) - Automatisation cœur de métier", 
+        "Phase 3: Excellence (12+ mois) - IA avancée et optimisation continue"
       ],
-      "risk_assessment": "Faible/Moyen/Élevé basé sur leur niveau actuel et taille équipe"
+      "risk_assessment": "Évaluation des risques avec mitigation",
+      "success_metrics": ["3-5 KPIs pour mesurer le succès de l'automatisation"]
     }
 
-    CRITIQUE: Sois spécifique à cette entreprise, utilise le contenu réel fourni, et concentre-toi sur les agents IA spécialisés, pas les chatbots génériques.
+    EXIGENCES CRITIQUES:
+    - Analyse niveau cabinet de conseil (McKinsey/Bain/BCG)
+    - Recommandations spécifiques à cette entreprise, pas génériques
+    - Focus sur l'impact business et le ROI mesurable
+    - Agents IA spécialisés avec intégrations métier
+    - Réponse 100% en français, professionnelle et stratégique
     `;
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -252,7 +230,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'Tu es un expert en automatisation d\'entreprise spécialisé dans l\'analyse des postes de travail et l\'implémentation d\'agents IA spécialisés. Tu analyses les entreprises françaises pour identifier tous les postes de travail et déterminer quelles tâches chronophages peuvent être automatisées. Tu fournis des audits détaillés avec des calculs ROI précis et des recommandations d\'agents IA spécialisés. Réponds uniquement en format JSON valide et en français.'
+            content: 'Tu es un consultant senior en transformation digitale, ancien associé chez McKinsey & Company, avec 25 ans d\'expérience. Tu conduis des analyses stratégiques approfondies pour identifier les opportunités d\'automatisation les plus impactantes. Tu fournis des recommandations d\'agents IA spécialisés avec ROI précis et impact business mesurable. Ton niveau d\'analyse est celui des meilleurs cabinets de conseil. Réponds uniquement en format JSON valide et en français professionnel.'
           },
           {
             role: 'user',
