@@ -196,9 +196,9 @@ serve(async (req) => {
       "strategic_insights": "3 insights stratégiques clés sur les opportunités d'automatisation",
       "competitive_advantage": "Avantage concurrentiel durable via l'automatisation",
       "implementation_roadmap": [
-        "Phase 1: Quick wins (0-3 mois) - Impact immédiat",
-        "Phase 2: Transformation (3-12 mois) - Automatisation cœur de métier", 
-        "Phase 3: Excellence (12+ mois) - IA avancée et optimisation continue"
+        "Phase 1: Contact & Analyse (48h) - Rappel sous 48h pour planifier votre stratégie d'automatisation personnalisée",
+        "Phase 2: Agent Prêt à l'Emploi (7 jours) - Premier agent IA spécialisé déployé et opérationnel avec intégrations métier",
+        "Phase 3: Écosystème Complet (30 jours) - Déploiement de tous les agents IA recommandés avec orchestration complète"
       ],
       "risk_assessment": "Évaluation des risques avec mitigation",
       "success_metrics": ["3-5 KPIs pour mesurer le succès de l'automatisation"]

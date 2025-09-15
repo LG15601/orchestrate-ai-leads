@@ -13,7 +13,19 @@ import {
   Lightbulb,
   Calendar,
   BarChart3,
-  ArrowRight
+  ArrowRight,
+  MessageSquare,
+  Users,
+  Briefcase,
+  DollarSign,
+  Settings,
+  FileText,
+  Headphones,
+  ShoppingCart,
+  Mail,
+  Phone,
+  Database,
+  PieChart
 } from "lucide-react";
 
 interface SpecializedAgent {
@@ -52,6 +64,24 @@ interface ExpertAuditResultsProps {
 }
 
 export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditResultsProps) => {
+  // Fonction pour obtenir l'icône appropriée selon le type d'agent
+  const getAgentIcon = (agentName: string) => {
+    const name = agentName.toLowerCase();
+    if (name.includes('commercial') || name.includes('vente') || name.includes('sales')) return Target;
+    if (name.includes('marketing') || name.includes('campagne')) return BarChart3;
+    if (name.includes('service') || name.includes('client') || name.includes('support')) return Headphones;
+    if (name.includes('admin') || name.includes('gestion')) return Briefcase;
+    if (name.includes('rh') || name.includes('recrutement')) return Users;
+    if (name.includes('comptabilité') || name.includes('finance')) return DollarSign;
+    if (name.includes('technique') || name.includes('it')) return Settings;
+    if (name.includes('analytics') || name.includes('rapport')) return PieChart;
+    if (name.includes('email') || name.includes('mail')) return Mail;
+    if (name.includes('chat') || name.includes('message')) return MessageSquare;
+    if (name.includes('e-commerce') || name.includes('boutique')) return ShoppingCart;
+    if (name.includes('données') || name.includes('data')) return Database;
+    return Bot; // Icône par défaut
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-12">
       {/* En-tête avec KPIs */}
@@ -169,11 +199,13 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
         </CardHeader>
         <CardContent className="p-8">
           <div className="space-y-8">
-            {auditResult.specialized_agents?.map((agent, index) => (
+            {auditResult.specialized_agents?.map((agent, index) => {
+              const AgentIcon = getAgentIcon(agent.name);
+              return (
               <div key={index} className="bg-accent-blue/5 border-2 border-accent-blue rounded-lg p-8 shadow-[2px_2px_0px_#000000]">
                 <div className="flex items-start gap-6">
                   <div className="w-16 h-16 bg-accent-blue rounded-full flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000000]">
-                    <Bot className="w-8 h-8 text-white" />
+                    <AgentIcon className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
                     <h4 className="text-2xl font-bold text-black mb-2">{agent.name}</h4>
@@ -219,47 +251,146 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
 
-      {/* Roadmap d'implémentation - Simplifié */}
+      {/* Roadmap d'implémentation - Accélérée */}
       <Card className="card-bold bg-white mb-12">
         <CardHeader className="bg-accent-purple text-white border-b-2 border-black">
           <CardTitle className="flex items-center gap-2 text-xl">
             <Calendar className="w-5 h-5" />
-            ROADMAP D'IMPLÉMENTATION
+            ROADMAP D'IMPLÉMENTATION ACCÉLÉRÉE
           </CardTitle>
         </CardHeader>
         <CardContent className="p-8">
           <div className="space-y-6">
-            {auditResult.implementation_roadmap?.map((phase, index) => (
-              <div key={index} className="flex items-center gap-6 p-6 bg-accent-purple/5 border-2 border-accent-purple rounded-lg shadow-[2px_2px_0px_#000000]">
-                <div className="w-12 h-12 bg-accent-purple text-white rounded-full flex items-center justify-center text-lg font-bold border-2 border-black shadow-[2px_2px_0px_#000000]">
-                  {index + 1}
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-black text-lg mb-1">Phase {index + 1}</h4>
-                  <p className="text-black font-medium">{phase}</p>
-                </div>
-                <ArrowRight className="w-6 h-6 text-accent-purple" />
+            <div className="flex items-center gap-6 p-6 bg-accent-purple/5 border-2 border-accent-purple rounded-lg shadow-[2px_2px_0px_#000000]">
+              <div className="w-12 h-12 bg-accent-purple text-white rounded-full flex items-center justify-center text-lg font-bold border-2 border-black shadow-[2px_2px_0px_#000000]">
+                1
               </div>
-            ))}
+              <div className="flex-1">
+                <h4 className="font-bold text-black text-lg mb-1">Phase 1: Contact & Analyse (48h)</h4>
+                <p className="text-black font-medium">Rappel sous 48h pour planifier votre stratégie d'automatisation personnalisée</p>
+              </div>
+              <ArrowRight className="w-6 h-6 text-accent-purple" />
+            </div>
+            
+            <div className="flex items-center gap-6 p-6 bg-accent-purple/5 border-2 border-accent-purple rounded-lg shadow-[2px_2px_0px_#000000]">
+              <div className="w-12 h-12 bg-accent-purple text-white rounded-full flex items-center justify-center text-lg font-bold border-2 border-black shadow-[2px_2px_0px_#000000]">
+                2
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-black text-lg mb-1">Phase 2: Agent Prêt à l'Emploi (7 jours)</h4>
+                <p className="text-black font-medium">Premier agent IA spécialisé déployé et opérationnel avec intégrations métier</p>
+              </div>
+              <ArrowRight className="w-6 h-6 text-accent-purple" />
+            </div>
+            
+            <div className="flex items-center gap-6 p-6 bg-accent-purple/5 border-2 border-accent-purple rounded-lg shadow-[2px_2px_0px_#000000]">
+              <div className="w-12 h-12 bg-accent-purple text-white rounded-full flex items-center justify-center text-lg font-bold border-2 border-black shadow-[2px_2px_0px_#000000]">
+                3
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-black text-lg mb-1">Phase 3: Écosystème Complet (30 jours)</h4>
+                <p className="text-black font-medium">Déploiement de tous les agents IA recommandés avec orchestration complète</p>
+              </div>
+              <ArrowRight className="w-6 h-6 text-accent-purple" />
+            </div>
+          </div>
+          
+          <div className="mt-8 p-6 bg-accent-blue/10 border-2 border-accent-blue rounded-lg">
+            <div className="flex items-center gap-3 mb-3">
+              <Bot className="w-6 h-6 text-accent-blue" />
+              <h5 className="font-bold text-accent-blue text-lg">Powered by Orchestra Connect</h5>
+            </div>
+            <p className="text-black font-medium">
+              Nos agents IA sont connectés à plus de 500 outils métier et s'intègrent parfaitement dans votre écosystème existant. 
+              Déploiement rapide, formation incluse, support dédié.
+            </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Avantage concurrentiel */}
+      {/* Avantage concurrentiel - Développé */}
       <Card className="card-bold bg-white mb-12">
         <CardHeader className="bg-accent-success text-white border-b-2 border-black">
           <CardTitle className="flex items-center gap-2 text-xl">
             <Target className="w-5 h-5" />
-            AVANTAGE CONCURRENTIEL
+            AVANTAGE CONCURRENTIEL DURABLE
           </CardTitle>
         </CardHeader>
         <CardContent className="p-8">
-          <p className="text-black font-medium text-xl leading-relaxed">{auditResult.competitive_advantage}</p>
+          <div className="space-y-6">
+            <p className="text-black font-medium text-xl leading-relaxed">{auditResult.competitive_advantage}</p>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-accent-success/10 border-2 border-accent-success rounded-lg p-6">
+                <h4 className="font-bold text-black text-lg mb-3 flex items-center gap-2">
+                  <Bot className="w-5 h-5 text-accent-success" />
+                  Agents IA vs LLM Traditionnels
+                </h4>
+                <ul className="space-y-2 text-black font-medium">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-success" />
+                    <span>Agents IA spécialisés dans votre métier</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-success" />
+                    <span>Intégrations natives avec vos outils</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-success" />
+                    <span>Apprentissage continu de vos processus</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-success" />
+                    <span>Autonomie dans l'exécution des tâches</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="bg-accent-blue/10 border-2 border-accent-blue rounded-lg p-6">
+                <h4 className="font-bold text-black text-lg mb-3 flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-accent-blue" />
+                  Intégration Rassurante
+                </h4>
+                <ul className="space-y-2 text-black font-medium">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-blue" />
+                    <span>Déploiement progressif et sécurisé</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-blue" />
+                    <span>Formation de vos équipes incluse</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-blue" />
+                    <span>Support dédié 24/7</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-accent-blue" />
+                    <span>ROI garanti ou remboursé</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="bg-accent-warning/10 border-2 border-accent-warning rounded-lg p-6">
+              <h4 className="font-bold text-black text-lg mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-accent-warning" />
+                Pourquoi nos Agents IA sont différents ?
+              </h4>
+              <p className="text-black font-medium leading-relaxed">
+                Contrairement aux chatbots génériques, nos agents IA sont des <strong>employés virtuels spécialisés</strong> qui comprennent votre métier, 
+                s'intègrent à vos outils existants et travaillent de manière autonome. Ils apprennent vos processus, 
+                s'adaptent à vos besoins et évoluent avec votre entreprise. C'est comme embaucher un expert dans chaque domaine, 
+                mais disponible 24h/24, sans congés, et qui ne fait jamais d'erreur.
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
