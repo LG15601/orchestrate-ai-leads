@@ -188,14 +188,28 @@ const AuditForm = () => {
         await new Promise(resolve => setTimeout(resolve, 1800));
       }
 
-      const { data, error } = await supabase.functions.invoke('ai-audit', {
-        body: { 
+      // Appel direct à la fonction Supabase
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-audit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ 
           url: normalizedUrl,
           maturityData,
           userEmail,
           auditType: 'free'
-        }
+        })
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Audit error:', errorText);
+        throw new Error(`Erreur lors de l'audit: ${response.status}`);
+      }
+
+      const { data, error } = await response.json();
 
       if (error) {
         console.error('Audit error:', error);
