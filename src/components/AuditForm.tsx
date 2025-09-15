@@ -187,17 +187,24 @@ const AuditForm = () => {
         await new Promise(resolve => setTimeout(resolve, 1800));
       }
 
-      // Appel direct à la fonction Supabase
+      // Vérification des variables d'environnement
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error('Variables d\'environnement Supabase manquantes. Vérifiez votre fichier .env.local');
+      }
+      
       console.log('Environment variables:', {
-        VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
-        VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Present' : 'Missing'
+        VITE_SUPABASE_URL: supabaseUrl,
+        VITE_SUPABASE_ANON_KEY: supabaseAnonKey ? 'Present' : 'Missing'
       });
       
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-audit`, {
+      const response = await fetch(`${supabaseUrl}/functions/v1/ai-audit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${supabaseAnonKey}`
         },
         body: JSON.stringify({ 
           url: normalizedUrl,
