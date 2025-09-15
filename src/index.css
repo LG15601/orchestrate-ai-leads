@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GetRepeat.io Bold Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    /* Design System Crème Douceur + Bold Style */
+    --background: 33 33% 96%; /* #F8F5F0 - Crème Douceur */
+    --foreground: 0 0% 0%; /* #000000 - Noir pur */
+    --card: 0 0% 100%; /* #FFFFFF - Blanc */
+    --card-foreground: 0 0% 0%; /* #000000 - Noir */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%; /* #000000 - Noir pour boutons */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - Blanc */
+    --primary-light: 0 0% 20%;
+    --primary-dark: 0 0% 0%;
+    --accent-success: 142 35% 52%; /* #7C9885 - Vert sauge harmonieux */
+    --accent-success-foreground: 0 0% 100%;
+    --accent-warning: 45 96% 64%; /* #FFE066 - Jaune accent gardé */
+    --accent-warning-foreground: 0 0% 0%;
+    --accent-orange: 0 85% 60%; /* #F87171 - Rouge/Rose */
+    --accent-orange-foreground: 0 0% 100%;
+    --accent-blue: 213 93% 68%; /* #60A5FA - Bleu */
+    --accent-purple: 258 90% 66%; /* #A78BFA - Violet */
+    --secondary: 33 20% 85%; /* Gris beige harmonieux avec le crème */
+    --secondary-foreground: 0 0% 0%;
+    --muted: 33 15% 75%; /* Gris plus foncé harmonieux */
+    --muted-foreground: 0 0% 30%;
+    --accent: 33 20% 85%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 35% 52%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 96% 64%;
+    --warning-foreground: 0 0% 0%;
+    --border: 0 0% 0%; /* #000000 - Bordures noires bold */
+    --input: 0 0% 100%;
+    --ring: 0 0% 0%;
+
+    /* Bold Typography System */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+    --radius: 0.75rem; /* 12px - Border radius standard */
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode avec palette crème */
+    --background: 0 0% 6%; /* Deep black */
+    --foreground: 33 33% 96%; /* Crème douceur */
+    --card: 0 0% 8%;
+    --card-foreground: 33 33% 96%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 33 33% 96%;
+    --primary: 33 33% 96%; /* Crème douceur */
+    --primary-foreground: 0 0% 0%;
+    --primary-light: 33 33% 98%;
+    --primary-dark: 33 30% 85%;
+    --accent-success: 142 35% 52%;
+    --accent-success-foreground: 0 0% 0%;
+    --accent-warning: 45 96% 64%;
+    --accent-warning-foreground: 0 0% 0%;
+    --accent-orange: 0 85% 60%;
+    --accent-orange-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 33 33% 96%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 33 33% 96%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 33 33% 96%;
+    --success: 142 35% 52%;
+    --success-foreground: 0 0% 0%;
+    --warning: 45 96% 64%;
+    --warning-foreground: 0 0% 0%;
+    --border: 33 33% 96%;
+    --input: 0 0% 16%;
+    --ring: 33 33% 96%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700; /* Bold comme getrepeat.io */
+    letter-spacing: -0.02em;
+  }
+}
+
+/* GetRepeat.io Bold Component Styles */
+
+/* Buttons - Bold Style */
+.btn-bold-primary {
+  @apply bg-card text-foreground border-2 border-border rounded-lg px-8 py-4 text-lg font-bold;
+  box-shadow: 4px 4px 0px hsl(var(--border));
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-bold-primary:hover {
+  @apply bg-primary text-primary-foreground;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px hsl(var(--border));
+}
+
+.btn-bold-primary:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px hsl(var(--border));
+}
+
+.btn-bold-secondary {
+  @apply bg-transparent text-foreground border-2 border-border rounded-lg px-6 py-3 text-base font-semibold;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-bold-secondary:hover {
+  @apply bg-primary text-primary-foreground;
+}
+
+/* Cards - Bold Style */
+.card-bold {
+  @apply bg-card rounded-xl p-6;
+  border: 2px solid hsl(var(--border));
+  box-shadow: 4px 4px 0px hsl(var(--border));
+  transition: all 0.2s ease-in-out;
+}
+
+.card-bold:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px hsl(var(--border));
+}
+
+/* Badge Bold */
+.badge-bold {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold;
+  background-color: hsl(var(--accent-warning));
+  color: hsl(var(--accent-warning-foreground));
+  border: 2px solid hsl(var(--border));
+}
+
+/* Input Bold */
+.input-bold {
+  @apply bg-card border-2 border-border rounded-lg px-4 py-3 text-base font-medium;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-bold:focus {
+  outline: none;
+  border-color: hsl(var(--accent-warning));
+  box-shadow: 0 0 0 4px hsla(var(--accent-warning), 0.2);
+}
+
+/* Gradient Cards pour résultats */
+.card-gradient-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 2px solid hsl(var(--border));
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 4px 4px 0px hsl(var(--border));
+}
+
+.card-gradient-success {
+  background: hsl(var(--accent-success));
+  color: hsl(var(--accent-success-foreground));
+  border: 2px solid hsl(var(--border));
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 4px 4px 0px hsl(var(--border));
+}
+
+.card-gradient-warning {
+  background: hsl(var(--accent-warning));
+  color: hsl(var(--accent-warning-foreground));
+  border: 2px solid hsl(var(--border));
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 4px 4px 0px hsl(var(--border));
+}
+
+/* Animations Bold */
+.animate-bold-in {
+  animation: boldSlideIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: boldSlideIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: boldSlideIn 0.8s ease-out forwards;
+}
+
+.interactive-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px hsl(var(--border));
+}
+
+/* Bold Keyframes */
+@keyframes boldSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
