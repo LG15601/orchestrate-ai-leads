@@ -9,11 +9,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen bg-background flex items-center relative overflow-hidden">{/* Fond jaune fluo getrepeat.io */}
-      {/* Subtle geometric elements */}
-      <div className="absolute top-20 left-10 w-px h-32 bg-border rotate-45 opacity-30"></div>
-      <div className="absolute top-40 right-20 w-px h-24 bg-border -rotate-45 opacity-30"></div>
-      <div className="absolute bottom-40 left-1/4 w-px h-20 bg-primary/20 rotate-12 opacity-40"></div>
+    <section className="min-h-screen bg-background flex items-center relative overflow-hidden">
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
@@ -59,8 +55,7 @@ const Hero = () => {
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="btn-bold-secondary min-w-48 h-12 text-base"
+              className="bg-accent-success text-white hover:bg-accent-success/90 min-w-48 h-12 text-base font-bold border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
               onClick={() => scrollToSection('agent-request-form')}
             >
               DEMANDER UN AGENT IA

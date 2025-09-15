@@ -90,49 +90,49 @@ export const ExpertAuditResults = ({ auditResult, onNewAnalysis }: ExpertAuditRe
           <CheckCircle className="w-4 h-4" />
           ANALYSE STRATÉGIQUE TERMINÉE
         </div>
-        <h2 className="text-4xl md:text-6xl font-bold text-black mb-6 leading-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 leading-tight">
           Votre Rapport d'Audit <span className="text-accent-success">Expert</span>
         </h2>
-        <p className="text-xl text-black font-medium max-w-3xl mx-auto">
+        <p className="text-lg text-black font-medium max-w-3xl mx-auto">
           Analyse stratégique de <span className="font-bold text-accent-success">{auditResult.company_name}</span> • 
           <span className="font-bold text-black"> {auditResult.sector}</span> • 
           <span className="font-bold text-black"> {auditResult.business_model}</span>
         </p>
       </div>
 
-      {/* KPIs Principaux - Design simplifié et robuste */}
-      <div className="grid lg:grid-cols-4 gap-6 mb-16">
-        <div className="bg-black text-white text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-6xl font-bold mb-4">{auditResult.score}%</div>
-          <h3 className="text-xl font-bold mb-2 text-accent-warning">Potentiel d'Automatisation</h3>
-          <p className="text-white/80 font-medium">Score d'opportunités identifiées</p>
+      {/* KPIs Principaux - Taille réduite */}
+      <div className="grid lg:grid-cols-4 gap-4 mb-12">
+        <div className="bg-black text-white text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-4xl font-bold mb-3">{auditResult.score}%</div>
+          <h3 className="text-lg font-bold mb-2 text-accent-warning">Potentiel d'Automatisation</h3>
+          <p className="text-white/80 font-medium text-sm">Score d'opportunités identifiées</p>
         </div>
 
-        <div className="bg-accent-success text-white text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-            <TrendingUp className="w-12 h-12 mr-2" />
+        <div className="bg-accent-success text-white text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-4xl font-bold mb-3 flex items-center justify-center">
+            <TrendingUp className="w-8 h-8 mr-2" />
             {auditResult.roi_estimate}
           </div>
-          <h3 className="text-xl font-bold mb-2">ROI Estimé</h3>
-          <p className="text-white/80 font-medium">Amélioration des marges</p>
+          <h3 className="text-lg font-bold mb-2">ROI Estimé</h3>
+          <p className="text-white/80 font-medium text-sm">Amélioration des marges</p>
         </div>
 
-        <div className="bg-accent-warning text-black text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-            <Clock className="w-12 h-12 mr-2" />
+        <div className="bg-accent-warning text-black text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-4xl font-bold mb-3 flex items-center justify-center">
+            <Clock className="w-8 h-8 mr-2" />
             {auditResult.time_saved}
           </div>
-          <h3 className="text-xl font-bold mb-2">Temps Économisé</h3>
-          <p className="text-black/80 font-medium">Par semaine avec l'automatisation</p>
+          <h3 className="text-lg font-bold mb-2">Temps Économisé</h3>
+          <p className="text-black/80 font-medium text-sm">Par semaine avec l'automatisation</p>
         </div>
 
-        <div className="bg-accent-blue text-white text-center p-8 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-          <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-            <Bot className="w-12 h-12 mr-2" />
+        <div className="bg-accent-blue text-white text-center p-6 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
+          <div className="text-4xl font-bold mb-3 flex items-center justify-center">
+            <Bot className="w-8 h-8 mr-2" />
             {auditResult.specialized_agents?.length || 0}
           </div>
-          <h3 className="text-xl font-bold mb-2">Agents IA Recommandés</h3>
-          <p className="text-white/80 font-medium">Spécialisés pour votre entreprise</p>
+          <h3 className="text-lg font-bold mb-2">Agents IA Recommandés</h3>
+          <p className="text-white/80 font-medium text-sm">Spécialisés pour votre entreprise</p>
         </div>
       </div>
 
