@@ -27,12 +27,8 @@ import {
   Lightbulb,
   Bot
 } from "lucide-react";
-import MaturityQuestions from "./MaturityQuestions";
 import AuditSteps from "./AuditSteps";
 import ValueProposition from "./ValueProposition";
-import { AgentThinking } from "./AgentThinking";
-import { ExpertAuditResults } from "./ExpertAuditResults";
-import ProgressiveAudit from "./ProgressiveAudit";
 
 interface SpecializedAgent {
   name: string;
