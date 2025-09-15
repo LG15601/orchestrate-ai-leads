@@ -139,63 +139,99 @@ serve(async (req) => {
     const possibleCompanyName = domainParts[0];
 
     const analysisPrompt = `
-    You are an elite business automation consultant with 20+ years of experience. Conduct a comprehensive, personalized audit of this website:
+    Tu es un expert en automatisation d'entreprise avec 20+ ans d'expérience, spécialisé dans l'analyse des postes de travail et l'implémentation d'agents IA spécialisés. 
 
-    WEBSITE URL: ${url}
+    MISSION: Analyser cette entreprise française pour identifier TOUS les postes de travail et déterminer quelles tâches chronophages peuvent être automatisées par des agents IA spécialisés.
+
+    DONNÉES À ANALYSER:
+    URL: ${url}
     DOMAIN: ${domain}
-
-    WEBSITE CONTENT:
-    ${content.slice(0, 12000)}
+    CONTENU DU SITE: ${content.slice(0, 15000)}
     ${maturityContext}
 
-    CRITICAL INSTRUCTIONS:
-    1. EXTRACT the exact company name from the content (not just domain)
-    2. IDENTIFY the specific business sector/industry from content and services offered
-    3. PERSONALIZE recommendations based on current AI usage and automation level
-    4. ADJUST complexity based on team size and business priority
-    5. BE SPECIFIC to this business, not generic advice
+    INSTRUCTIONS CRITIQUES:
+    1. EXTRACT le nom exact de l'entreprise depuis le contenu (pas juste le domaine)
+    2. IDENTIFIE tous les postes de travail possibles dans cette entreprise
+    3. ANALYSE chaque tâche chronophage qui peut être automatisée
+    4. RECOMMANDE des agents IA spécialisés pour chaque poste
+    5. SOIS SPÉCIFIQUE à cette entreprise, pas générique
+    6. RÉPONDS UNIQUEMENT EN FRANÇAIS
 
-    ANALYSIS FRAMEWORK:
-    
-    1. BUSINESS IDENTIFICATION:
-    - Extract exact company name from website content
-    - Identify primary business model (B2B, B2C, marketplace, SaaS, etc.)
-    - Determine industry sector from services/products described
-    
-    2. CURRENT STATE ASSESSMENT:
-    - Analyze existing automation level from content
-    - Identify current technology stack from website
-    - Assess digital maturity relative to industry standards
-    
-    3. PERSONALIZED OPPORTUNITIES:
-    - Match automation opportunities to business priority (${maturityData?.businessPriority || 'efficiency'})
-    - Scale recommendations to team size (${maturityData?.teamSize || 'unknown'})
-    - Consider current AI usage level (${maturityData?.currentAiUsage || 'unknown'})
-    
-    4. SECTOR-SPECIFIC RECOMMENDATIONS:
-    - Industry-standard automation benchmarks for this specific sector
-    - Competitive advantage opportunities in this market
-    - Compliance/regulatory considerations for this industry
+    FRAMEWORK D'ANALYSE DÉTAILLÉ:
 
-    RESPOND WITH VALID JSON ONLY (no markdown, no backticks):
+    1. IDENTIFICATION DE L'ENTREPRISE:
+    - Nom exact de l'entreprise
+    - Secteur d'activité spécifique
+    - Modèle économique (B2B, B2C, SaaS, etc.)
+    - Taille estimée de l'équipe
+
+    2. ANALYSE DES POSTES DE TRAVAIL:
+    - Administration & Gestion
+    - Commercial & Ventes  
+    - Marketing & Communication
+    - Service Client & Support
+    - Production & Opérations
+    - RH & Recrutement
+    - Comptabilité & Finance
+    - Technique & IT
+
+    3. IDENTIFICATION DES TÂCHES CHRONOPHAGES:
+    - Tâches répétitives quotidiennes
+    - Processus manuels complexes
+    - Gestion de données volumineuses
+    - Communication client répétitive
+    - Reporting et analyses
+
+    4. RECOMMANDATIONS D'AGENTS IA SPÉCIALISÉS:
+    - Agent Commercial IA (CRM, prospection, suivi)
+    - Agent Marketing IA (campagnes, contenu, analytics)
+    - Agent Service Client IA (chat, tickets, FAQ)
+    - Agent Administratif IA (planning, documents, facturation)
+    - Agent RH IA (recrutement, formation, évaluations)
+    - Agent Analytics IA (rapports, KPIs, prédictions)
+
+    RÉPONDS UNIQUEMENT EN JSON VALIDE (pas de markdown, pas de backticks):
     {
-      "score": (0-100 overall automation readiness),
-      "company_name": "exact company name extracted from content",
-      "sector": "specific industry vertical (e.g., E-commerce, SaaS, Consulting, Manufacturing, etc.)",
-      "team_size": "${maturityData?.teamSize || 'estimated from content'}",
-      "technologies": ["specific technologies detected in content"],
-      "pain_points": ["3-5 specific pain points identified from this business context"],
-      "automation_opportunities": ["5-7 personalized automation opportunities based on their current level and priority"],
-      "roi_estimate": "realistic % range with reasoning for this specific business",
-      "time_saved": "X-Y hours/week specific to their processes",
-      "priority_agents": ["Top 3 AI agents most relevant to this specific business model and sector"],
-      "analysis_summary": "Personalized 2-sentence insight about this specific company's biggest automation opportunity",
-      "competitive_advantage": "How automation would specifically help them vs competitors in their sector",
-      "implementation_roadmap": ["Phase 1: Quick wins for their priority", "Phase 2: Core automation", "Phase 3: Advanced AI"],
-      "risk_assessment": "Low/Medium/High based on their current automation level and team size"
+      "score": (0-100 potentiel d'automatisation),
+      "company_name": "nom exact de l'entreprise extrait du contenu",
+      "sector": "secteur d'activité spécifique",
+      "team_size": "${maturityData?.teamSize || 'estimé depuis le contenu'}",
+      "technologies": ["technologies détectées dans le contenu"],
+      "job_positions": {
+        "administration": ["postes administratifs identifiés"],
+        "commercial": ["postes commerciaux identifiés"], 
+        "marketing": ["postes marketing identifiés"],
+        "service_client": ["postes service client identifiés"],
+        "production": ["postes production identifiés"],
+        "rh": ["postes RH identifiés"],
+        "comptabilite": ["postes comptabilité identifiés"],
+        "technique": ["postes techniques identifiés"]
+      },
+      "pain_points": ["5-7 points de friction spécifiques identifiés"],
+      "time_consuming_tasks": ["8-10 tâches chronophages identifiées avec estimation temps/semaine"],
+      "automation_opportunities": ["6-8 opportunités d'automatisation spécifiques avec agents IA recommandés"],
+      "specialized_agents": [
+        {
+          "name": "Nom de l'agent IA",
+          "role": "Rôle spécifique",
+          "tasks": ["tâches automatisées"],
+          "time_saved": "X heures/semaine",
+          "integrations": ["outils connectés"]
+        }
+      ],
+      "roi_estimate": "estimation réaliste % avec justification",
+      "time_saved": "X-Y heures/semaine économisées",
+      "analysis_summary": "Résumé personnalisé de 3 phrases sur les plus grandes opportunités d'automatisation",
+      "competitive_advantage": "Comment l'automatisation les aiderait spécifiquement vs concurrents",
+      "implementation_roadmap": [
+        "Phase 1: Gains rapides - Agents IA prioritaires",
+        "Phase 2: Automatisation cœur de métier", 
+        "Phase 3: IA avancée et intégrations complètes"
+      ],
+      "risk_assessment": "Faible/Moyen/Élevé basé sur leur niveau actuel et taille équipe"
     }
 
-    CRITICAL: Be specific to this business, not generic. Use the actual content and context provided.
+    CRITIQUE: Sois spécifique à cette entreprise, utilise le contenu réel fourni, et concentre-toi sur les agents IA spécialisés, pas les chatbots génériques.
     `;
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -216,7 +252,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are an elite business automation consultant specializing in AI implementation strategy. Provide detailed, sector-specific automation audits with precise ROI calculations and actionable recommendations. Respond only in valid JSON format.'
+            content: 'Tu es un expert en automatisation d\'entreprise spécialisé dans l\'analyse des postes de travail et l\'implémentation d\'agents IA spécialisés. Tu analyses les entreprises françaises pour identifier tous les postes de travail et déterminer quelles tâches chronophages peuvent être automatisées. Tu fournis des audits détaillés avec des calculs ROI précis et des recommandations d\'agents IA spécialisés. Réponds uniquement en format JSON valide et en français.'
           },
           {
             role: 'user',

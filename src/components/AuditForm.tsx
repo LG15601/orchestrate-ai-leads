@@ -27,6 +27,27 @@ import {
 import MaturityQuestions from "./MaturityQuestions";
 import AuditSteps from "./AuditSteps";
 import ValueProposition from "./ValueProposition";
+import { AgentThinking } from "./AgentThinking";
+import { EnhancedAuditResults } from "./EnhancedAuditResults";
+
+interface JobPosition {
+  administration: string[];
+  commercial: string[];
+  marketing: string[];
+  service_client: string[];
+  production: string[];
+  rh: string[];
+  comptabilite: string[];
+  technique: string[];
+}
+
+interface SpecializedAgent {
+  name: string;
+  role: string;
+  tasks: string[];
+  time_saved: string;
+  integrations: string[];
+}
 
 interface AuditResult {
   score: number;
@@ -34,11 +55,13 @@ interface AuditResult {
   sector: string;
   team_size: string;
   technologies: string[];
+  job_positions: JobPosition;
   pain_points: string[];
+  time_consuming_tasks: string[];
   automation_opportunities: string[];
+  specialized_agents: SpecializedAgent[];
   roi_estimate: string;
   time_saved: string;
-  priority_agents: string[];
   analysis_summary: string;
   competitive_advantage: string;
   implementation_roadmap: string[];
@@ -208,204 +231,15 @@ const AuditForm = () => {
 
   if (formStep === 'results') {
     if (auditResult) {
-      const extractNumber = (str: string): number => {
-        const match = str?.match(/(\d+)/);
-        return match ? parseInt(match[1]) : 0;
-      };
-
       return (
         <>
           <AuditSteps currentStep={4} />
           <section className="py-20 bg-background" id="audit-form">
             <div className="container mx-auto px-6">
-              <div className="max-w-6xl mx-auto animate-fade-in">
-                <div className="text-center mb-12">
-                  <div className="inline-flex items-center gap-2 bg-accent-success text-white px-6 py-2 rounded-full font-bold text-sm mb-6 border-2 border-black shadow-[2px_2px_0px_#000000]">
-                    <CheckCircle className="w-4 h-4" />
-                    AUDIT TERMINÉ
-                  </div>
-                  <h2 className="text-4xl md:text-6xl font-bold text-black mb-6 leading-tight">
-                    Votre Rapport d'Audit <span className="text-accent-success">Personnalisé</span>
-                  </h2>
-                  <p className="text-xl text-black font-medium max-w-2xl mx-auto">
-                    Analyse complète de <span className="font-bold text-accent-success">{auditResult.company_name || "votre entreprise"}</span> • Secteur: <span className="font-bold text-black">{auditResult.sector}</span>
-                  </p>
-                </div>
-
-                {/* Section KPIs */}
-                <div className="grid lg:grid-cols-3 gap-8 mb-12">
-                  <div className="card-bold bg-black text-white text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-                    <div className="text-6xl font-bold mb-4">{auditResult.score}%</div>
-                    <h3 className="text-xl font-bold mb-2 text-accent-warning">Score d'Automatisation</h3>
-                    <p className="text-white/80 font-medium">
-                      Potentiel d'amélioration identifié
-                    </p>
-                  </div>
-
-                  <div className="card-bold bg-accent-success text-white text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-                    <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-                      <TrendingUp className="w-12 h-12 mr-2" />
-                      {auditResult.roi_estimate}
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">ROI Estimé</h3>
-                    <p className="text-white/80 font-medium">
-                      Amélioration des marges
-                    </p>
-                  </div>
-
-                  <div className="card-bold bg-accent-warning text-black text-center hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200">
-                    <div className="text-6xl font-bold mb-4 flex items-center justify-center">
-                      <Clock className="w-12 h-12 mr-2" />
-                      {auditResult.time_saved}
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Temps Économisé</h3>
-                    <p className="text-black/80 font-medium">
-                      Par semaine avec l'automatisation
-                    </p>
-                  </div>
-                </div>
-
-                {/* Section Informations Entreprise */}
-                <div className="card-bold bg-white mb-8">
-                  <div className="bg-black text-white p-6 border-b-2 border-black">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      <Building2 className="w-5 h-5" />
-                      PROFIL DE VOTRE ENTREPRISE
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="grid md:grid-cols-3 gap-6">
-                      <div className="bg-background border-2 border-black p-4 rounded-lg shadow-[2px_2px_0px_#000000]">
-                        <span className="font-bold text-black text-sm uppercase tracking-wide">Secteur</span>
-                        <p className="text-black font-medium text-lg mt-1">{auditResult.sector}</p>
-                      </div>
-                      <div className="bg-background border-2 border-black p-4 rounded-lg shadow-[2px_2px_0px_#000000]">
-                        <span className="font-bold text-black text-sm uppercase tracking-wide">Taille d'équipe</span>
-                        <p className="text-black font-medium text-lg mt-1">{auditResult.team_size}</p>
-                      </div>
-                      <div className="bg-background border-2 border-black p-4 rounded-lg shadow-[2px_2px_0px_#000000]">
-                        <span className="font-bold text-black text-sm uppercase tracking-wide">Technologies</span>
-                        <p className="text-black font-medium text-lg mt-1">{auditResult.technologies?.join(', ')}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section Pain Points */}
-                <div className="card-bold bg-white mb-8">
-                  <div className="bg-accent-orange text-white p-6 border-b-2 border-black">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      <AlertTriangle className="w-5 h-5" />
-                      POINTS DE FRICTION IDENTIFIÉS
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="grid gap-4">
-                      {auditResult.pain_points?.map((pain, index) => (
-                        <div key={index} className="flex items-start gap-3 p-4 bg-accent-orange/10 border-2 border-accent-orange rounded-lg shadow-[2px_2px_0px_#000000]">
-                          <X className="w-5 h-5 text-accent-orange mt-0.5 flex-shrink-0 font-bold" />
-                          <p className="text-black font-medium">{pain}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section Opportunités */}
-                <div className="card-bold bg-white mb-8">
-                  <div className="bg-accent-warning text-black p-6 border-b-2 border-black">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      <Lightbulb className="w-5 h-5" />
-                      OPPORTUNITÉS D'AUTOMATISATION
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="grid gap-4">
-                      {auditResult.automation_opportunities?.map((opportunity, index) => (
-                        <div key={index} className="flex items-start gap-3 p-4 bg-accent-success/10 border-2 border-accent-success rounded-lg shadow-[2px_2px_0px_#000000]">
-                          <CheckCircle className="w-5 h-5 text-accent-success mt-0.5 flex-shrink-0 font-bold" />
-                          <p className="text-black font-medium">{opportunity}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section Agents Recommandés */}
-                <div className="card-bold bg-white mb-8">
-                  <div className="bg-accent-blue text-white p-6 border-b-2 border-black">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      <Bot className="w-5 h-5" />
-                      AGENTS IA RECOMMANDÉS
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="grid gap-4">
-                      {auditResult.priority_agents?.map((agent, index) => (
-                        <div key={index} className="flex items-start gap-3 p-4 bg-accent-blue/10 border-2 border-accent-blue rounded-lg shadow-[2px_2px_0px_#000000]">
-                          <Bot className="w-5 h-5 text-accent-blue mt-0.5 flex-shrink-0 font-bold" />
-                          <p className="text-black font-medium">{agent}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section Roadmap */}
-                <div className="card-bold bg-white mb-8">
-                  <div className="bg-accent-purple text-white p-6 border-b-2 border-black">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      <Calendar className="w-5 h-5" />
-                      ROADMAP D'IMPLÉMENTATION
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="space-y-4">
-                      {auditResult.implementation_roadmap?.map((phase, index) => (
-                        <div key={index} className="flex items-start gap-4 p-4 bg-accent-purple/10 border-2 border-accent-purple rounded-lg shadow-[2px_2px_0px_#000000]">
-                          <div className="w-8 h-8 bg-accent-purple text-white rounded-full flex items-center justify-center text-sm font-bold border-2 border-black">
-                            {index + 1}
-                          </div>
-                          <p className="text-black font-medium pt-1">{phase}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Section Avantage Concurrentiel */}
-                <div className="card-bold bg-white mb-8">
-                  <div className="bg-accent-success text-white p-6 border-b-2 border-black">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                      <Target className="w-5 h-5" />
-                      AVANTAGE CONCURRENTIEL
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <p className="text-black font-medium text-lg leading-relaxed">{auditResult.competitive_advantage}</p>
-                  </div>
-                </div>
-
-                {/* Call to Actions */}
-                <div className="card-bold bg-black text-white p-8">
-                  <h3 className="text-3xl font-bold mb-4 text-accent-warning">🚀 Prêt à transformer votre entreprise ?</h3>
-                  <p className="mb-8 text-white font-medium text-lg">Obtenez votre stratégie d'automatisation complète et planifiez votre succès</p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button 
-                      onClick={() => window.open('https://cal.com/getrepeat', '_blank')}
-                      className="bg-accent-warning text-black hover:bg-accent-warning/90 font-bold text-lg px-8 py-4 border-2 border-white shadow-[4px_4px_0px_#ffffff] hover:shadow-[6px_6px_0px_#ffffff] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
-                    >
-                      📅 Réserver une Démo Gratuite
-                    </Button>
-                    <Button 
-                      onClick={handleNewAnalysis}
-                      className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold text-lg px-8 py-4 shadow-[4px_4px_0px_#ffffff] hover:shadow-[6px_6px_0px_#ffffff] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
-                    >
-                      🔄 Nouvelle Analyse
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <EnhancedAuditResults 
+                auditResult={auditResult} 
+                onNewAnalysis={handleNewAnalysis}
+              />
             </div>
           </section>
         </>
@@ -417,33 +251,11 @@ const AuditForm = () => {
         <AuditSteps currentStep={3} />
         <section className="py-20 bg-background" id="audit-form">
           <div className="container mx-auto px-6">
-            <div className="max-w-2xl mx-auto text-center">
-              <div className="card-bold p-12">
-                <div className="mb-8">
-                  <div className="w-20 h-20 mx-auto mb-6 bg-accent-warning rounded-full flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_#000000]">
-                    <Clock className="w-10 h-10 text-black animate-pulse" />
-                  </div>
-                  <h3 className="text-3xl font-bold text-black mb-4">
-                    Analyse en cours...
-                  </h3>
-                  <p className="text-black font-medium text-lg mb-8">
-                    {currentStep}
-                  </p>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="w-full bg-background border-2 border-black rounded-lg overflow-hidden shadow-[2px_2px_0px_#000000]">
-                    <div 
-                      className="h-4 bg-accent-success transition-all duration-300 ease-out"
-                      style={{ width: `${progress}%` }}
-                    ></div>
-                  </div>
-                  <p className="text-sm text-black font-medium">
-                    {progress}% terminé • Environ {Math.max(1, Math.ceil((100 - progress) / 20))} minute{Math.ceil((100 - progress) / 20) > 1 ? 's' : ''} restante{Math.ceil((100 - progress) / 20) > 1 ? 's' : ''}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <AgentThinking 
+              currentStep={currentStep}
+              progress={progress}
+              isAnalyzing={isLoading}
+            />
           </div>
         </section>
       </>
