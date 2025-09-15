@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckCircle, Bot, Zap, Calendar, ArrowRight, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import ExpressForm from "./ExpressForm";
 
 interface AgentRequestData {
   companyName: string;
@@ -25,33 +26,18 @@ const AgentRequestForm = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.companyName || !formData.contactEmail || !formData.businessNeeds) {
-      toast({
-        title: "Champs requis",
-        description: "Veuillez remplir tous les champs obligatoires.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Simulation de l'envoi
-    setTimeout(() => {
-      setSubmitted(true);
-      toast({
-        title: "Demande envoyée !",
-        description: "Notre équipe vous contactera sous 24h pour une démonstration personnalisée.",
-      });
-    }, 1000);
-  };
-
-  const updateFormData = (field: keyof AgentRequestData, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  const handleExpressComplete = (data: any) => {
+    setFormData({
+      companyName: data.company,
+      contactEmail: data.email,
+      businessNeeds: "Demande via formulaire express",
+      budget: "À définir"
+    });
+    setSubmitted(true);
+    toast({
+      title: "Demande envoyée !",
+      description: "Notre équipe vous contactera sous 24h pour une démonstration personnalisée.",
+    });
   };
 
   if (submitted) {
@@ -115,20 +101,20 @@ const AgentRequestForm = () => {
   }
 
   return (
-    <section id="agent-request-form" className="py-20 bg-background">
+    <section id="agent-request-form" className="py-16 bg-background">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {/* Header Bold */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-accent-success text-white px-6 py-2 rounded-full font-bold text-sm mb-6 border-2 border-black shadow-[2px_2px_0px_#000000]">
               <Bot className="h-4 w-4" />
               CRÉATEUR D'AGENT IA
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-black mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 leading-tight">
               Créez Votre Agent IA 
               <span className="block text-accent-success">Sur-Mesure</span>
             </h2>
-            <p className="text-xl text-black font-medium max-w-2xl mx-auto">
+            <p className="text-base text-black font-medium max-w-2xl mx-auto">
               Décrivez vos besoins en 30 secondes. Notre équipe crée l'agent IA parfait pour votre entreprise.
             </p>
           </div>
@@ -146,108 +132,7 @@ const AgentRequestForm = () => {
             </CardHeader>
             
             <CardContent className="p-8">
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Entreprise */}
-                  <div className="space-y-3">
-                    <Label htmlFor="companyName" className="text-black font-bold text-lg">
-                      Nom de votre entreprise *
-                    </Label>
-                    <Input
-                      id="companyName"
-                      value={formData.companyName}
-                      onChange={(e) => updateFormData('companyName', e.target.value)}
-                      placeholder="TechCorp, InnovSolutions..."
-                      className="input-bold text-lg font-medium border-2 border-black shadow-[2px_2px_0px_#000000] focus:shadow-[4px_4px_0px_#000000] transition-all"
-                      required
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div className="space-y-3">
-                    <Label htmlFor="contactEmail" className="text-black font-bold text-lg">
-                      Email professionnel *
-                    </Label>
-                    <Input
-                      id="contactEmail"
-                      type="email"
-                      value={formData.contactEmail}
-                      onChange={(e) => updateFormData('contactEmail', e.target.value)}
-                      placeholder="votre.email@entreprise.com"
-                      className="input-bold text-lg font-medium border-2 border-black shadow-[2px_2px_0px_#000000] focus:shadow-[4px_4px_0px_#000000] transition-all"
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Besoins Business */}
-                <div className="space-y-3">
-                  <Label htmlFor="businessNeeds" className="text-black font-bold text-lg">
-                    Quel est votre principal besoin business ? *
-                  </Label>
-                  <Textarea
-                    id="businessNeeds"
-                    value={formData.businessNeeds}
-                    onChange={(e) => updateFormData('businessNeeds', e.target.value)}
-                    placeholder="Ex: Automatiser le support client, optimiser les ventes, analyser des données, gérer les stocks..."
-                    rows={4}
-                    className="input-bold text-lg font-medium border-2 border-black shadow-[2px_2px_0px_#000000] focus:shadow-[4px_4px_0px_#000000] transition-all resize-none"
-                    required
-                  />
-                </div>
-
-                {/* Budget */}
-                <div className="space-y-3">
-                  <Label htmlFor="budget" className="text-black font-bold text-lg">
-                    Budget approximatif
-                  </Label>
-                  <Select value={formData.budget} onValueChange={(value) => updateFormData('budget', value)}>
-                    <SelectTrigger className="input-bold text-lg font-medium border-2 border-black shadow-[2px_2px_0px_#000000] focus:shadow-[4px_4px_0px_#000000] transition-all">
-                      <SelectValue placeholder="Sélectionnez votre budget" />
-                    </SelectTrigger>
-                    <SelectContent className="border-2 border-black shadow-[4px_4px_0px_#000000]">
-                      <SelectItem value="startup" className="text-lg font-medium">Startup (moins de 10k€)</SelectItem>
-                      <SelectItem value="pme" className="text-lg font-medium">PME (10k€ - 50k€)</SelectItem>
-                      <SelectItem value="enterprise" className="text-lg font-medium">Entreprise (50k€+)</SelectItem>
-                      <SelectItem value="discussion" className="text-lg font-medium">À discuter</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Trust Banner */}
-                <div className="bg-accent-success/10 border-2 border-accent-success rounded-lg p-6">
-                  <div className="flex items-center justify-center space-x-8 text-center">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-accent-success rounded-full"></div>
-                      <span className="text-black font-bold">Réponse sous 24h</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-accent-success rounded-full"></div>
-                      <span className="text-black font-bold">Démo personnalisée</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-accent-success rounded-full"></div>
-                      <span className="text-black font-bold">Sans engagement</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <div className="text-center pt-4">
-                  <Button 
-                    type="submit"
-                    className="bg-accent-success hover:bg-accent-success/90 text-white font-bold text-xl px-12 py-4 border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] transform hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
-                  >
-                    <Bot className="mr-3 h-6 w-6" />
-                    CRÉER MON AGENT IA
-                    <ArrowRight className="ml-3 h-6 w-6" />
-                  </Button>
-                  
-                  <p className="text-sm text-black opacity-70 mt-4 font-medium">
-                    🔒 Vos données sont sécurisées et ne seront jamais partagées
-                  </p>
-                </div>
-              </form>
+              <ExpressForm onComplete={handleExpressComplete} />
             </CardContent>
           </Card>
 

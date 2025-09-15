@@ -20,8 +20,8 @@ const Footer = () => {
                 <Bot className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white">Orchestra Connect</h3>
-                <p className="text-sm text-white/80 font-medium">Agents IA Sur-Mesure</p>
+                <h3 className="text-xl font-bold text-white">AgentConnect</h3>
+                <p className="text-sm text-white/80 font-medium">powered by OrchestraConnect.fr</p>
               </div>
             </div>
             <p className="text-white/80 font-medium leading-relaxed mb-6">
@@ -130,10 +130,10 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-accent-warning" />
                 <a 
-                  href="mailto:contact@orchestraconnect.fr" 
+                  href="mailto:contact@agentconnect.fr" 
                   className="text-white/80 font-medium hover:text-accent-warning transition-colors duration-200"
                 >
-                  contact@orchestraconnect.fr
+                  contact@agentconnect.fr
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -161,7 +161,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left">
               <p className="text-white/80 font-medium text-sm">
-                © 2024 Orchestra Connect. Tous droits réservés.
+                © 2024 AgentConnect powered by OrchestraConnect.fr. Tous droits réservés.
               </p>
               <p className="text-white/60 font-medium text-xs mt-1">
                 Agents IA spécialisés • Automatisation intelligente • ROI garanti

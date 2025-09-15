@@ -29,6 +29,7 @@ import AuditSteps from "./AuditSteps";
 import ValueProposition from "./ValueProposition";
 import { AgentThinking } from "./AgentThinking";
 import { ExpertAuditResults } from "./ExpertAuditResults";
+import ProgressiveAudit from "./ProgressiveAudit";
 
 interface SpecializedAgent {
   name: string;
@@ -67,7 +68,7 @@ const AuditForm = () => {
   const [progress, setProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState("");
   const [auditResult, setAuditResult] = useState<AuditResult | null>(null);
-  const [formStep, setFormStep] = useState<'url' | 'maturity' | 'email' | 'results'>('url');
+  const [formStep, setFormStep] = useState<'progressive' | 'analysis' | 'results'>('progressive');
   const [maturityData, setMaturityData] = useState({
     currentAiUsage: '',
     currentAutomation: '',
@@ -78,6 +79,7 @@ const AuditForm = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [progressiveData, setProgressiveData] = useState<any>(null);
 
   const isValidUrl = (urlString: string): boolean => {
     try {
@@ -96,6 +98,25 @@ const AuditForm = () => {
       return `https://${urlString}`;
     }
     return urlString;
+  };
+
+  const handleProgressiveComplete = (data: any) => {
+    setProgressiveData(data);
+    setUrl(normalizeUrl(data.url));
+    setMaturityData({
+      currentAiUsage: data.currentAiUsage,
+      currentAutomation: '',
+      businessPriority: data.businessPriority,
+      teamSize: data.teamSize
+    });
+    setUserEmail(data.email);
+    setFirstName(data.firstName);
+    setLastName(data.lastName);
+  };
+
+  const handleStartAnalysis = () => {
+    setFormStep('analysis');
+    runAudit();
   };
 
   const handleUrlSubmit = () => {
@@ -226,7 +247,7 @@ const AuditForm = () => {
       return (
         <>
           <AuditSteps currentStep={4} />
-          <section className="py-20 bg-background" id="audit-form">
+          <section className="py-16 bg-background" id="audit-form">
             <div className="container mx-auto px-6">
               <ExpertAuditResults 
                 auditResult={auditResult} 
@@ -241,7 +262,24 @@ const AuditForm = () => {
     return (
       <>
         <AuditSteps currentStep={3} />
-        <section className="py-20 bg-background" id="audit-form">
+        <section className="py-16 bg-background" id="audit-form">
+          <div className="container mx-auto px-6">
+            <AgentThinking 
+              currentStep={currentStep}
+              progress={progress}
+              isAnalyzing={isLoading}
+            />
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (formStep === 'analysis') {
+    return (
+      <>
+        <AuditSteps currentStep={3} />
+        <section className="py-16 bg-background" id="audit-form">
           <div className="container mx-auto px-6">
             <AgentThinking 
               currentStep={currentStep}
@@ -384,54 +422,21 @@ const AuditForm = () => {
     <>
       <AuditSteps currentStep={1} />
       <ValueProposition />
-      <section className="py-20 bg-background" id="audit-form">
+      <section className="py-16 bg-background" id="audit-form">
         <div className="container mx-auto px-6">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Prêt à transformer votre productivité ? Commencez ici.
-              </h2>
-              <p className="text-xl text-muted-foreground">
-                Découvrez en 45 secondes combien d'heures vous pourriez économiser chaque mois
-              </p>
-            </div>
-
-            <div className="card-bold p-8">
-              <div className="space-y-6">
-                <div>
-                  <label htmlFor="website-url" className="block text-lg font-semibold text-foreground mb-3">
-                    L'URL de votre site web
-                  </label>
-                  <Input
-                    id="website-url"
-                    type="url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="monsite.com ou https://www.monsite.com"
-                    className="input-bold h-14 text-base"
-                  />
-                  <p className="text-sm text-muted-foreground mt-2">
-                    🔍 Notre IA analysera votre site pour comprendre votre métier
-                  </p>
-                </div>
-                
-                <Button 
-                  onClick={handleUrlSubmit}
-                  disabled={!url.trim()}
-                  size="lg"
-                  className="btn-bold-primary w-full h-14 text-lg"
-                >
-                  Continuer →
-                </Button>
-                
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">
-                    ✓ Analyse gratuite • ✓ Aucune inscription requise • ✓ Résultats personnalisés
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="max-w-2xl mx-auto text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              Prêt à transformer votre productivité ?
+            </h2>
+            <p className="text-base text-muted-foreground">
+              Découvrez en 2 minutes combien d'heures vous pourriez économiser chaque mois
+            </p>
           </div>
+
+          <ProgressiveAudit 
+            onComplete={handleProgressiveComplete}
+            onStartAnalysis={handleStartAnalysis}
+          />
         </div>
       </section>
     </>
