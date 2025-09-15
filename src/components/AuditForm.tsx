@@ -6,6 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
+import { AgentThinking } from "@/components/AgentThinking";
+import { ExpertAuditResults } from "@/components/ExpertAuditResults";
+import { ProgressiveAudit } from "@/components/ProgressiveAudit";
 import { 
   CheckCircle, 
   TrendingUp, 
@@ -115,8 +118,13 @@ const AuditForm = () => {
   };
 
   const handleStartAnalysis = async () => {
+    console.log('handleStartAnalysis called, setting formStep to analysis');
     setFormStep('analysis');
-    await runAudit();
+    // Petit délai pour s'assurer que les states sont mis à jour
+    setTimeout(async () => {
+      console.log('Starting audit with data:', { url, maturityData, userEmail });
+      await handleAuditSubmit();
+    }, 100);
   };
 
   const handleUrlSubmit = () => {
@@ -271,13 +279,14 @@ const AuditForm = () => {
               progress={progress}
               isAnalyzing={isLoading}
             />
-          </div>
+                  </div>
         </section>
       </>
     );
   }
 
   if (formStep === 'analysis') {
+    console.log('Rendering analysis phase with:', { currentStep, progress, isLoading });
     return (
       <>
         <AuditSteps currentStep={3} />
@@ -429,11 +438,11 @@ const AuditForm = () => {
           <div className="max-w-2xl mx-auto text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
               Prêt à transformer votre productivité ?
-            </h2>
+              </h2>
             <p className="text-base text-muted-foreground">
               Découvrez en 2 minutes combien d'heures vous pourriez économiser chaque mois
-            </p>
-          </div>
+              </p>
+            </div>
 
           <ProgressiveAudit 
             onComplete={handleProgressiveComplete}
