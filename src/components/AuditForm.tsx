@@ -189,6 +189,11 @@ const AuditForm = () => {
       }
 
       // Appel direct à la fonction Supabase
+      console.log('Environment variables:', {
+        VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+        VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Present' : 'Missing'
+      });
+      
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-audit`, {
         method: 'POST',
         headers: {
@@ -203,10 +208,13 @@ const AuditForm = () => {
         })
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+      
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Audit error:', errorText);
-        throw new Error(`Erreur lors de l'audit: ${response.status}`);
+        console.error('Audit error response:', errorText);
+        throw new Error(`Erreur lors de l'audit: ${response.status} - ${errorText}`);
       }
 
       const { data, error } = await response.json();
