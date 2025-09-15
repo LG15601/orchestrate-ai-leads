@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { AgentThinking } from "@/components/AgentThinking";
 import { ExpertAuditResults } from "@/components/ExpertAuditResults";
-import { ProgressiveAudit } from "@/components/ProgressiveAudit";
+import ProgressiveAudit from "@/components/ProgressiveAudit";
 import { 
   CheckCircle, 
   TrendingUp, 
