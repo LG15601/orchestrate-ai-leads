@@ -121,6 +121,38 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
       ...prev,
       [currentQ.id]: value
     }));
+
+    // Auto-avance après 1 seconde pour les questions à choix multiples
+    if (currentQ.type === 'select') {
+      setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion(currentQuestion + 1);
+        } else {
+          // Dernière question - on complète
+          setTimeout(() => {
+            onComplete({...answers, [currentQ.id]: value});
+            onStartAnalysis();
+          }, 500);
+        }
+      }, 1000);
+    }
+  };
+
+  const handleInputKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && canProceed()) {
+      // Auto-avance pour les champs de texte avec Entrée
+      setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion(currentQuestion + 1);
+        } else {
+          // Dernière question - on complète
+          setTimeout(() => {
+            onComplete(answers);
+            onStartAnalysis();
+          }, 500);
+        }
+      }, 500);
+    }
   };
 
   const canProceed = () => {
@@ -168,6 +200,16 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
           <p className="text-black/70 font-medium">
             {currentQ.description}
           </p>
+          {currentQ.type === 'select' && (
+            <p className="text-xs text-accent-success font-medium mt-2">
+              ⚡ La question suivante apparaîtra automatiquement
+            </p>
+          )}
+          {currentQ.type !== 'select' && (
+            <p className="text-xs text-accent-success font-medium mt-2">
+              ⚡ Appuyez sur Entrée pour passer à la question suivante
+            </p>
+          )}
         </CardHeader>
 
         <CardContent className="space-y-6">
@@ -193,6 +235,7 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
               placeholder={currentQ.placeholder}
               value={answers[currentQ.id as keyof typeof answers]}
               onChange={(e) => handleAnswerChange(e.target.value)}
+              onKeyPress={handleInputKeyPress}
               className="w-full h-12 text-base border-2 border-black shadow-[2px_2px_0px_#000000] focus:shadow-[4px_4px_0px_#000000] focus:translate-x-[-1px] focus:translate-y-[-1px] transition-all duration-200"
             />
           )}

@@ -114,9 +114,9 @@ const AuditForm = () => {
     setLastName(data.lastName);
   };
 
-  const handleStartAnalysis = () => {
+  const handleStartAnalysis = async () => {
     setFormStep('analysis');
-    runAudit();
+    await runAudit();
   };
 
   const handleUrlSubmit = () => {
@@ -203,6 +203,7 @@ const AuditForm = () => {
       
       if (data?.data) {
         setAuditResult(data.data);
+        setFormStep('results');
         toast({
           title: "🎉 Audit terminé !",
           description: "Votre rapport personnalisé est prêt",
@@ -230,7 +231,7 @@ const AuditForm = () => {
     setAuditResult(null);
     setProgress(0);
     setCurrentStep("");
-    setFormStep('url');
+    setFormStep('progressive');
     setMaturityData({
       currentAiUsage: '',
       currentAutomation: '',
@@ -240,6 +241,7 @@ const AuditForm = () => {
     setUserEmail('');
     setFirstName('');
     setLastName('');
+    setProgressiveData(null);
   };
 
   if (formStep === 'results') {
