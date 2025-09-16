@@ -265,18 +265,20 @@ const AuditForm = () => {
         throw new Error(`Erreur lors de l'audit: ${response.status} - ${errorText}`);
       }
 
-      const { data, error } = await response.json();
+      const responseData = await response.json();
+      console.log('Full response data:', responseData);
 
-      if (error) {
-        console.error('Audit error:', error);
-        throw new Error(error.message || 'Erreur lors de l\'audit');
+      if (responseData.error) {
+        console.error('Audit error:', responseData.error);
+        throw new Error(responseData.error.message || 'Erreur lors de l\'audit');
       }
 
       setProgress(100);
       setCurrentStep("Audit terminé !");
       
-      if (data?.data) {
-        setAuditResult(data.data);
+      if (responseData.success && responseData.data) {
+        console.log('Audit result data:', responseData.data);
+        setAuditResult(responseData.data);
         setFormStep('results');
         toast({
           title: "🎉 Audit terminé !",
@@ -284,6 +286,7 @@ const AuditForm = () => {
           duration: 4000,
         });
       } else {
+        console.error('No data in response:', responseData);
         throw new Error('Aucune donnée reçue de l\'audit');
       }
     } catch (error) {
