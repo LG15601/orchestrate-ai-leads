@@ -85,6 +85,7 @@ const AuditForm = () => {
   };
 
   const handleProgressiveComplete = (data: any) => {
+    console.log('AuditForm: handleProgressiveComplete called with data:', data);
     setProgressiveData(data);
     // URL is already validated and complete from ProgressiveAudit
     setUrl(data.url);

@@ -142,6 +142,8 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
       setCurrentQuestion(currentQuestion + 1);
     } else {
       // Toutes les questions sont répondues
+      console.log('ProgressiveAudit: All questions completed, calling onComplete and onStartAnalysis');
+      console.log('ProgressiveAudit: answers:', answers);
       onComplete(answers);
       onStartAnalysis();
     }
