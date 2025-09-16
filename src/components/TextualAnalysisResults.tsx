@@ -258,19 +258,19 @@ L'analyse révèle que vos principaux défis actuels (${auditData.pain_points?.s
                     <Bot className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-2xl font-bold text-black mb-2">{agent.name || `Solution IA #${index + 1}`}</h4>
-                    <p className="text-accent-purple font-bold text-lg mb-3">{agent.business_impact || agent.impact}</p>
-                    <p className="text-black font-medium mb-4">{agent.role || agent.description}</p>
+                    <h4 className="text-2xl font-bold text-black mb-2">{String(agent.name || `Solution IA #${index + 1}`)}</h4>
+                    <p className="text-accent-purple font-bold text-lg mb-3">{String(agent.business_impact || agent.impact || 'Impact positif sur votre activité')}</p>
+                    <p className="text-black font-medium mb-4">{String(agent.role || agent.description || 'Agent personnalisé pour votre secteur')}</p>
                     
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="bg-accent-warning/20 border border-accent-warning rounded-lg p-4">
                         <p className="text-sm font-bold text-black">
-                          ⏰ {agent.time_saved || agent.timeSaved || "10-15h/semaine"}
+                          ⏰ {String(agent.time_saved || agent.timeSaved || "10-15h/semaine")}
                         </p>
                       </div>
                       <div className="bg-accent-success/20 border border-accent-success rounded-lg p-4">
                         <p className="text-sm font-bold text-black">
-                          📈 {agent.roi_timeline || agent.roiTimeline || "ROI en 3 mois"}
+                          📈 {String(agent.roi_timeline || agent.roiTimeline || "ROI en 3 mois")}
                         </p>
                       </div>
                     </div>

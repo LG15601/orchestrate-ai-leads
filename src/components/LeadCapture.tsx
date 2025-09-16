@@ -57,13 +57,13 @@ const LeadCapture = ({ onLeadCaptured, auditResult, className = "" }: LeadCaptur
       };
 
       // Check if lead already exists
-      const { data: existingLead } = await supabase
+      const { data: existingLead, error: selectError } = await supabase
         .from('leads')
         .select('id, email')
         .eq('email', formData.email)
-        .single();
+        .maybeSingle(); // Use maybeSingle instead of single to avoid error if no result
 
-      if (existingLead) {
+      if (existingLead && !selectError) {
         // Update existing lead
         const { error: updateError } = await supabase
           .from('leads')
@@ -100,6 +100,7 @@ const LeadCapture = ({ onLeadCaptured, auditResult, className = "" }: LeadCaptur
       
       // Envoyer l'email de confirmation
       try {
+        console.log('Tentative d\'envoi d\'emails...');
         await sendLeadConfirmationEmail(formData.email, leadData);
         
         // Si c'est un audit, envoyer aussi le rapport
@@ -114,6 +115,7 @@ const LeadCapture = ({ onLeadCaptured, auditResult, className = "" }: LeadCaptur
         });
       } catch (emailError) {
         console.error('Erreur lors de l\'envoi de l\'email:', emailError);
+        // Ne pas faire planter l'app si l'email échoue
         toast({
           title: "✅ Enregistré !",
           description: "Vos informations ont été enregistrées. L'email sera envoyé sous peu.",
