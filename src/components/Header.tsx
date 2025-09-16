@@ -73,30 +73,16 @@ const Header = () => {
             >
               Blog
             </button>
-            <button 
-              onClick={() => scrollToSection('express-form')}
-              className="text-black hover:text-gray-700 transition-colors duration-200 font-medium"
-            >
-              Arrêtez de vous concentrer sur les tâches manuelles
-            </button>
           </nav>
 
           {/* CTA Button Desktop */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center gap-3">
-              <Button 
-                onClick={() => window.location.href = '/leads'}
-                className="bg-transparent border border-black text-black hover:bg-black hover:text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200 text-sm"
-              >
-                Dashboard
-              </Button>
-              <Button 
-                onClick={() => scrollToSection('audit-form')}
-                className="bg-black text-white hover:bg-gray-800 font-semibold px-6 py-2 rounded-lg transition-colors duration-200"
-              >
-                RÉSERVER UNE DÉMO
-              </Button>
-            </div>
+            <Button 
+              onClick={() => scrollToSection('audit-form')}
+              className="bg-black text-white hover:bg-gray-800 font-semibold px-6 py-2 rounded-lg transition-colors duration-200"
+            >
+              AUDIT GRATUIT
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -149,12 +135,6 @@ const Header = () => {
                 >
                   Blog
                 </button>
-                <button 
-                  onClick={() => { scrollToSection('express-form'); setIsMenuOpen(false); }}
-                  className="block w-full text-left text-black hover:text-gray-700 transition-colors duration-200 py-2"
-                >
-                  Arrêtez de vous concentrer sur les tâches manuelles
-                </button>
               </div>
 
               <div className="pt-4 px-4">
@@ -162,7 +142,7 @@ const Header = () => {
                   onClick={() => { scrollToSection('audit-form'); setIsMenuOpen(false); }}
                   className="w-full bg-black text-white hover:bg-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
                 >
-                  RÉSERVER UNE DÉMO
+                  AUDIT GRATUIT
                 </Button>
               </div>
             </nav>

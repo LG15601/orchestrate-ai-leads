@@ -1,8 +1,11 @@
 import { Bot, Mail, Phone, MapPin, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -17,24 +20,24 @@ const Footer = () => {
         <div className="container mx-auto px-6">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-black mb-6">
-              Unlock Your Business Automation
+              Libérez le Potentiel de Votre Entreprise
             </h2>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Start activating the automation that matters. Get started now to see how AgentConnect can 
-              <strong> simplify</strong> and <strong>supercharge</strong> your business workflow.
+              Commencez à activer l'automatisation qui compte. Découvrez comment AgentConnect peut 
+              <strong> simplifier</strong> et <strong>booster</strong> vos processus métier.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={() => scrollToSection('audit-form')}
                 className="bg-black text-white hover:bg-gray-800 font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
               >
-                Get Started
+                Commencer
               </Button>
               <Button 
                 onClick={() => scrollToSection('audit-form')}
                 className="bg-white text-black hover:bg-gray-50 font-semibold px-8 py-3 rounded-lg border border-gray-300 transition-colors duration-200"
               >
-                Or, book a demo
+                Audit Gratuit
               </Button>
             </div>
           </div>
@@ -199,6 +202,14 @@ const Footer = () => {
                 >
                   CGV
                 </a>
+                {/* Lien admin caché */}
+                <button
+                  onClick={() => navigate('/leads')}
+                  className="text-white/20 font-medium text-xs hover:text-white/40 transition-colors duration-200 opacity-30 hover:opacity-100"
+                  title="Administration"
+                >
+                  •
+                </button>
               </div>
             </div>
           </div>

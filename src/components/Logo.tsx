@@ -17,7 +17,11 @@ const Logo = ({ className = '', size = 'md' }: LogoProps) => {
     <img 
       src={logoAgentConnect} 
       alt="AgentConnect Logo" 
-      className={`${sizeClasses[size]} ${className} object-contain`}
+      className={`${sizeClasses[size]} ${className} object-contain rounded-lg`}
+      style={{
+        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+        background: 'transparent'
+      }}
     />
   );
 };
