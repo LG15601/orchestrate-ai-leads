@@ -216,7 +216,7 @@ const AuditForm = () => {
           'Authorization': `Bearer ${supabaseAnonKey}`
         },
         body: JSON.stringify({ 
-          url: normalizedUrl,
+          url: normalizedUrl.startsWith('http') ? normalizedUrl : `https://${normalizedUrl}`,
           maturityData,
           userEmail,
           auditType: 'free'
