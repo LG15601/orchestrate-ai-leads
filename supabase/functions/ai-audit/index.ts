@@ -195,24 +195,47 @@ serve(async (req) => {
     const analysisPrompt = `
     Tu es un expert en audit business et recommandation d'agents IA spécialisés pour OrchestraConnect.fr. Tu analyses les entreprises pour identifier les opportunités d'automatisation par pôles métier.
 
-    BASE DE CONNAISSANCES - AGENTS IA MÉTIER:
+    BASE DE CONNAISSANCES - AGENTS IA MÉTIER ORCHESTRACONNECT:
     
-    Les agents IA OrchestraConnect sont des intelligences artificielles spécialisées qui vont bien au-delà des assistants conversationnels génériques comme ChatGPT ou Claude. Ils sont conçus pour automatiser, professionnaliser et personnaliser des tâches métier précises dans les PME.
+    OrchestraConnect propose des agents IA spécialisés par secteur d'activité qui transforment radicalement la productivité des PME françaises. Ces agents vont bien au-delà des assistants conversationnels génériques comme ChatGPT ou Claude.
 
-    AVANTAGES DES AGENTS IA MÉTIER vs IA GÉNÉRALISTES:
-    - Spécialisation secteur/métier (expertise comptable, RH, industrie, santé)
-    - Intégration de la réglementation française et des outils PME
-    - Made in France: hébergement souverain RGPD, support local
-    - Déploiement en 48h, usage Plug & Play, zéro code requis
-    - Collaboration humaine augmentée avec apprentissage personnalisé
-    - ROI moyen de 300% dès la première année
-    - Libération de 15 à 100h/mois selon le métier
+    PHILOSOPHIE ORCHESTRACONNECT:
+    - "L'IA ne remplace pas l'humain, elle le libère des tâches à faible valeur ajoutée"
+    - Focus sur l'automatisation intelligente des processus métier
+    - Expertise sectorielle approfondie (comptabilité, RH, commerce, industrie, santé)
+    - Intégration native des réglementations françaises et outils PME
+    - Approche "human-in-the-loop" pour maintenir le contrôle humain
 
-    EXEMPLES D'AGENTS IA SPÉCIALISÉS:
-    - Gestionnaire client pour experts-comptables
-    - Assistant RH pour pré-sélectionner rapidement des CV
-    - Agent commercial pour analyser et personnaliser la prospection
-    - Agent administratif qui gère automatiquement la facturation ou les relances clients
+    AVANTAGES DIFFÉRENCIANTS ORCHESTRACONNECT:
+    - Spécialisation sectorielle poussée avec base de connaissances métier
+    - Conformité RGPD native, hébergement souverain français
+    - Déploiement express en 48h maximum, interface Plug & Play
+    - Zéro code requis, formation incluse, support local français
+    - Apprentissage continu personnalisé selon les spécificités de l'entreprise
+    - ROI moyen démontré de 300% dès la première année d'utilisation
+    - Libération prouvée de 15 à 100 heures/mois selon le métier
+
+    CATALOGUE D'AGENTS SPÉCIALISÉS ORCHESTRACONNECT:
+    
+    SECTEUR COMPTABILITÉ & FINANCE:
+    - Agent Comptable Expert: automatisation saisies, rapprochements bancaires, déclarations
+    - Agent Contrôle de Gestion: tableaux de bord automatisés, analyse financière
+    - Agent Recouvrement: relances clients intelligentes, suivi créances
+    
+    SECTEUR RESSOURCES HUMAINES:
+    - Agent Recrutement: pré-sélection CV, entretiens préliminaires automatisés
+    - Agent Formation: planification, suivi compétences, évaluations
+    - Agent Paie & Administration: calculs automatisés, déclarations sociales
+    
+    SECTEUR COMMERCIAL & MARKETING:
+    - Agent Prospection: qualification leads, personnalisation approche commerciale
+    - Agent Relation Client: support automatisé, gestion réclamations
+    - Agent Marketing Digital: campagnes automatisées, analyse performance
+    
+    SECTEUR OPÉRATIONNEL:
+    - Agent Logistique: gestion stocks, optimisation livraisons
+    - Agent Qualité: contrôles automatisés, rapports conformité
+    - Agent Maintenance: planification préventive, gestion interventions
 
     MISSION: Analyser cette entreprise et fournir une analyse complète par secteur d'activité avec recommandations d'agents IA OrchestraConnect par pôles métier.
 
@@ -264,19 +287,22 @@ serve(async (req) => {
       ],
       "specialized_agents": [
         {
-          "name": "Agent IA OrchestraConnect spécialisé",
-          "description": "description détaillée de l'agent spécialisé",
-          "impact": "impact business mesurable",
-          "time_saved": "X heures/semaine",
+          "name": "Agent OrchestraConnect spécialisé",
+          "category": "Comptabilité/RH/Commercial/Opérationnel",
+          "description": "description détaillée de l'agent spécialisé OrchestraConnect",
+          "sector_expertise": "expertise sectorielle intégrée",
+          "automated_processes": ["processus automatisés spécifiques"],
+          "human_collaboration": "modes de collaboration humain-IA",
+          "impact": "impact business mesurable quantifié",
+          "time_saved": "X heures/semaine libérées",
           "priority": "Haute/Moyenne/Faible",
-          "tasks": ["tâches automatisées spécifiques"],
-          "integrations": ["outils PME connectés"],
-          "roi_timeline": "ROI en X mois",
-          "pole": "pôle métier concerné",
-          "expertise_level": "niveau d'expertise intégré",
-          "compliance": "conformité réglementaire française",
-          "deployment_time": "délai de déploiement",
-          "training_included": "formation incluse"
+          "french_compliance": "conformité réglementaire française",
+          "integrations": ["outils PME français connectés"],
+          "roi_timeline": "ROI en X mois avec preuves",
+          "deployment": "déploiement en 48h maximum",
+          "support": "support local français inclus",
+          "learning": "apprentissage personnalisé continu",
+          "pole": "pôle métier concerné"
         }
       ],
       "roi_estimate": "estimation ROI",
@@ -288,15 +314,17 @@ serve(async (req) => {
       "success_metrics": ["KPIs de succès"]
     }
 
-    EXIGENCES:
-    - Analyse par pôles métier détaillée avec focus sur les agents IA OrchestraConnect
-    - Recommandations d'agents IA spécialisés par pôle (pas d'IA généralistes)
-    - Identification des phases à forte valeur ajoutée boostables par IA
-    - Mise en avant des avantages des agents IA métier vs IA généralistes
-    - Focus sur l'automatisation intelligente et l'accès à l'expertise premium
-    - Réponse 100% en français
-    - Insister sur le ROI de 300% et la libération de 15-100h/mois
-    - Mentionner la conformité RGPD et le support local français
+    EXIGENCES SPÉCIFIQUES ORCHESTRACONNECT:
+    - Analyse sectorielle approfondie avec recommandations d'agents IA OrchestraConnect précis
+    - Identification des processus métier automatisables avec approche "human-in-the-loop"
+    - Recommandations d'agents spécialisés par secteur (éviter les IA généralistes)
+    - Mise en avant de la philosophie "libérer l'humain des tâches à faible valeur ajoutée"
+    - Focus sur l'expertise sectorielle française et la conformité réglementaire
+    - Mentionner systématiquement le déploiement en 48h et le support local
+    - Quantifier précisément le ROI de 300% et la libération de 15-100h/mois
+    - Insister sur l'apprentissage personnalisé et l'intégration aux outils PME français
+    - Réponse 100% en français professionnel
+    - Prioriser les agents selon l'impact business immédiat mesurable
     `;
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');

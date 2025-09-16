@@ -134,8 +134,8 @@ const getEmailTemplate = (title: string, content: string, isAuditReport = false)
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">🤖 OrchestraConnect</div>
-            <div class="tagline">Votre partenaire en automatisation intelligente</div>
+            <div class="logo">🤖 AgentConnect</div>
+            <div class="tagline">Votre partenaire en agents IA spécialisés</div>
         </div>
         
         <div class="content">
@@ -145,7 +145,7 @@ const getEmailTemplate = (title: string, content: string, isAuditReport = false)
         <div class="footer">
             <p>Merci de nous faire confiance pour transformer votre entreprise avec l'IA.</p>
             <p><strong>Alex</strong><br>
-            OrchestraConnect<br>
+            AgentConnect<br>
             <a href="mailto:contact@orchestraconnect.fr">contact@orchestraconnect.fr</a></p>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Bot, ArrowRight, ChevronDown } from "lucide-react";
+import Logo from "./Logo";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,9 +21,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-accent-success rounded-lg flex items-center justify-center">
-              <Bot className="w-5 h-5 text-white" />
-            </div>
+            <Logo size="md" className="shadow-lg" />
             <h1 className="text-xl font-bold text-black">AgentConnect</h1>
           </div>
 

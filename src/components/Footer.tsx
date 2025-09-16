@@ -1,5 +1,6 @@
 import { Bot, Mail, Phone, MapPin, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
 
 const Footer = () => {
   const scrollToSection = (elementId: string) => {
@@ -47,9 +48,7 @@ const Footer = () => {
             {/* Logo et Description */}
             <div className="lg:col-span-1">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 bg-accent-success rounded-lg flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-white" />
-                </div>
+                <Logo size="sm" />
                 <h3 className="text-xl font-bold text-white">AgentConnect</h3>
               </div>
               <p className="text-white/80 font-medium leading-relaxed mb-6">
