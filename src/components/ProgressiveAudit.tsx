@@ -37,7 +37,7 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
     {
       id: 'url',
       title: 'Votre site web',
-      description: 'Quelle est l\'URL de votre entreprise ?',
+      description: 'Quelle est l\'URL complète de votre entreprise ? (commencez par https://)',
       icon: Globe,
       placeholder: 'https://votre-entreprise.com',
       type: 'url'
@@ -106,7 +106,38 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const currentQ = questions[currentQuestion];
 
+  const validateAnswer = (questionId: string, value: string): boolean => {
+    switch (questionId) {
+      case 'url':
+        return value.startsWith('https://') && value.length > 10;
+      case 'email':
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      default:
+        return value.trim().length > 0;
+    }
+  };
+
   const handleNext = () => {
+    const currentAnswer = answers[currentQ.id as keyof typeof answers];
+    
+    if (!validateAnswer(currentQ.id, currentAnswer)) {
+      let errorMessage = 'Veuillez remplir ce champ.';
+      
+      if (currentQ.id === 'url') {
+        errorMessage = 'Veuillez saisir une URL complète commençant par https:// (ex: https://votre-entreprise.com)';
+      } else if (currentQ.id === 'email') {
+        errorMessage = 'Veuillez saisir une adresse email valide.';
+      }
+      
+      toast({
+        title: "Champ requis",
+        description: errorMessage,
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {

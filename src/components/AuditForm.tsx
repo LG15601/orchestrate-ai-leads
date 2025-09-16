@@ -79,29 +79,15 @@ const AuditForm = () => {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [progressiveData, setProgressiveData] = useState<any>(null);
 
-  const isValidUrl = (urlString: string): boolean => {
-    try {
-      if (urlString.includes('.') && urlString.length > 3) {
-        return true;
-      }
-      new URL(urlString);
-      return true;
-    } catch (e) {
-      return urlString.includes('.') && urlString.length > 3;
-    }
-  };
-
-  const normalizeUrl = (urlString: string): string => {
-    if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
-      return `https://${urlString}`;
-    }
-    return urlString;
+  // URL validation - user must provide complete URL with https://
+  const validateUrl = (urlString: string): boolean => {
+    return urlString.startsWith('https://') && urlString.length > 10;
   };
 
   const handleProgressiveComplete = (data: any) => {
     setProgressiveData(data);
-    const normalizedUrl = normalizeUrl(data.url);
-    setUrl(normalizedUrl);
+    // URL is already validated and complete from ProgressiveAudit
+    setUrl(data.url);
     setMaturityData({
       currentAiUsage: data.currentAiUsage,
       currentAutomation: '',
@@ -111,9 +97,6 @@ const AuditForm = () => {
     setUserEmail(data.email);
     setFirstName(data.firstName);
     setLastName(data.lastName);
-    
-    // Store the normalized URL for immediate use
-    setProgressiveData(prev => ({ ...prev, normalizedUrl }));
   };
 
   const handleStartAnalysis = async () => {
@@ -169,12 +152,11 @@ const AuditForm = () => {
   };
 
   const handleAuditSubmit = async () => {
-    // Use the normalized URL from progressive data or fallback to url state
-    const normalizedUrl = progressiveData?.normalizedUrl || url;
+    // URL is already validated and complete from ProgressiveAudit
+    const auditUrl = url;
     
-    console.log('handleAuditSubmit - normalizedUrl:', normalizedUrl);
+    console.log('handleAuditSubmit - auditUrl:', auditUrl);
     console.log('handleAuditSubmit - progressiveData:', progressiveData);
-    console.log('handleAuditSubmit - url state:', url);
     
     setIsLoading(true);
     setProgress(0);
@@ -216,7 +198,7 @@ const AuditForm = () => {
           'Authorization': `Bearer ${supabaseAnonKey}`
         },
         body: JSON.stringify({ 
-          url: normalizedUrl.startsWith('http') ? normalizedUrl : `https://${normalizedUrl}`,
+          url: auditUrl,
           maturityData,
           userEmail,
           auditType: 'free'
