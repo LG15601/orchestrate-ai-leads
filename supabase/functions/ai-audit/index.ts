@@ -55,15 +55,22 @@ serve(async (req) => {
     // Step 1: Enhanced content extraction with fallback
     let content = '';
     
+    // Normalize URL - add https:// if no protocol specified
+    let normalizedUrl = url;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      normalizedUrl = `https://${url}`;
+    }
+    
     // Validate URL format
     try {
-      new URL(url);
+      new URL(normalizedUrl);
     } catch (urlError) {
       return new Response(JSON.stringify({
         success: false,
         error: 'Invalid URL format',
         url: url,
-        details: 'Please provide a valid URL starting with http:// or https://'
+        normalizedUrl: normalizedUrl,
+        details: 'Please provide a valid domain name (e.g., example.com or https://example.com)'
       }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -84,7 +91,7 @@ serve(async (req) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            url: url,
+            url: normalizedUrl,
             pageOptions: {
               onlyMainContent: true,
               includeHtml: false,
@@ -106,7 +113,7 @@ serve(async (req) => {
       if (!content || content.length < 200) {
         console.log('Using fallback extraction method...');
         
-        const fallbackResponse = await fetch(url, {
+        const fallbackResponse = await fetch(normalizedUrl, {
           headers: {
             'User-Agent': 'Mozilla/5.0 (compatible; BusinessAuditBot/1.0)',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -136,14 +143,14 @@ serve(async (req) => {
 
     } catch (extractionError) {
       console.error('Content extraction failed:', extractionError);
-      console.error('URL attempted:', url);
+      console.error('URL attempted:', normalizedUrl);
       console.error('Error details:', extractionError.message);
       
       // Return a more informative error
       return new Response(JSON.stringify({
         success: false,
         error: `Unable to access or extract content from the website: ${extractionError.message}`,
-        url: url,
+        url: normalizedUrl,
         details: 'Please check if the URL is accessible and try again'
       }), {
         status: 400,

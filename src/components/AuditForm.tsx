@@ -165,7 +165,8 @@ const AuditForm = () => {
   };
 
   const handleAuditSubmit = async () => {
-    const normalizedUrl = normalizeUrl(url);
+    // URL is already normalized from handleProgressiveComplete
+    const normalizedUrl = url;
     
     setIsLoading(true);
     setProgress(0);
