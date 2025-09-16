@@ -114,6 +114,12 @@ const AuditForm = () => {
     setLastName(data.lastName);
     
     console.log('AuditForm: All states updated successfully');
+    
+    // Démarrer l'analyse après que les states soient mis à jour
+    setTimeout(() => {
+      console.log('AuditForm: Starting analysis after state update');
+      handleStartAnalysis();
+    }, 300);
   };
 
   const handleStartAnalysis = async () => {
@@ -506,7 +512,6 @@ const AuditForm = () => {
 
           <ProgressiveAudit 
             onComplete={handleProgressiveComplete}
-            onStartAnalysis={handleStartAnalysis}
           />
         </div>
       </section>

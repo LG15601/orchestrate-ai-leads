@@ -18,10 +18,9 @@ import {
 
 interface ProgressiveAuditProps {
   onComplete: (data: any) => void;
-  onStartAnalysis: () => void;
 }
 
-const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps) => {
+const ProgressiveAudit = ({ onComplete }: ProgressiveAuditProps) => {
   const { toast } = useToast();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({
@@ -144,10 +143,10 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
       setCurrentQuestion(currentQuestion + 1);
     } else {
       // Toutes les questions sont répondues
-      console.log('ProgressiveAudit: All questions completed, calling onComplete and onStartAnalysis');
+      console.log('ProgressiveAudit: All questions completed, calling onComplete');
       console.log('ProgressiveAudit: answers:', answers);
       onComplete(answers);
-      onStartAnalysis();
+      // onStartAnalysis sera appelé depuis AuditForm après la mise à jour des states
     }
   };
 
@@ -165,8 +164,9 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
         } else {
           // Dernière question - on complète
           setTimeout(() => {
+            console.log('ProgressiveAudit: Auto-completing with select answer');
             onComplete({...answers, [currentQ.id]: value});
-            onStartAnalysis();
+            // onStartAnalysis sera appelé depuis AuditForm après la mise à jour des states
           }, 500);
         }
       }, 1000);
@@ -182,8 +182,9 @@ const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps
         } else {
           // Dernière question - on complète
           setTimeout(() => {
+            console.log('ProgressiveAudit: Auto-completing with Enter key');
             onComplete(answers);
-            onStartAnalysis();
+            // onStartAnalysis sera appelé depuis AuditForm après la mise à jour des states
           }, 500);
         }
       }, 500);
