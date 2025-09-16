@@ -123,6 +123,7 @@ const SimpleAuditForm = ({ onComplete }: SimpleAuditFormProps) => {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           className="w-full h-14 text-lg border-2 border-black shadow-[2px_2px_0px_#000000] focus:shadow-[4px_4px_0px_#000000] focus:translate-x-[-1px] focus:translate-y-[-1px] transition-all duration-200"
+          autoFocus
         />
 
         <Button

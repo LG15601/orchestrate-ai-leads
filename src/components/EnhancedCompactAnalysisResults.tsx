@@ -44,7 +44,7 @@ interface EnhancedCompactAnalysisResultsProps {
 
 export const EnhancedCompactAnalysisResults = ({ auditData, onNewAnalysis }: EnhancedCompactAnalysisResultsProps) => {
   
-  // Génération d'une analyse PME ultra-enrichie avec compréhension des agents IA métier
+  // Génération d'une analyse PME mesurée et professionnelle
   const generateEnhancedAnalysis = () => {
     const companyName = auditData.company_name || "votre entreprise";
     const sector = auditData.sector || "votre secteur";
@@ -52,14 +52,14 @@ export const EnhancedCompactAnalysisResults = ({ auditData, onNewAnalysis }: Enh
     
     return `${companyName} présente un potentiel d'automatisation de ${score}% dans le secteur ${sector}. 
 
-**En tant que PME, vous gérez tout : acquisition client, visibilité, croissance ET tâches administratives chronophages.** Notre analyse révèle que vous pourriez libérer ${auditData.time_saved} par semaine grâce aux **agents IA métier spécialisés** - bien au-delà des ChatGPT génériques.
+En tant que PME, vous gérez l'acquisition client, la visibilité, la croissance et les tâches administratives. Notre analyse révèle que vous pourriez potentiellement libérer ${auditData.time_saved} par semaine grâce aux agents IA métier spécialisés.
 
-**L'opportunité transformatrice** : Nos agents IA intègrent l'expertise des meilleurs spécialistes de votre secteur, automatisent intelligemment vos processus métier, et se branchent nativement à vos outils PME existants. **Résultat : vous vous recentrez sur votre cœur de métier à forte valeur ajoutée.**
+L'opportunité identifiée : Les agents IA intègrent l'expertise de spécialistes de votre secteur, automatisent vos processus métier récurrents, et s'intègrent à vos outils PME existants. L'objectif est de vous permettre de vous recentrer sur votre cœur de métier à forte valeur ajoutée.
 
-**Pourquoi nos agents IA révolutionnent votre quotidien :**
-• **Spécialisation métier** : Contrairement aux IA généralistes, ils maîtrisent votre réglementation française et vos spécificités sectorielles
-• **ROI immédiat** : 300% dès la première année selon nos études terrain
-• **Made in France** : Hébergement souverain RGPD, support local, déploiement en 48h`;
+Avantages des agents IA métier :
+• Spécialisation sectorielle : Maîtrise de votre réglementation française et spécificités métier
+• Retour sur investissement mesuré selon nos études clients
+• Solution française : Hébergement RGPD, support local, déploiement rapide`;
   };
 
   // Sélection intelligente des agents avec analyse approfondie des pain points PME
@@ -110,21 +110,21 @@ export const EnhancedCompactAnalysisResults = ({ auditData, onNewAnalysis }: Enh
       case 'marketing':
         return {
           title: 'Agent IA Marketing & Acquisition',
-          impact: 'Triplez votre volume de prospection qualifiée',
-          description: 'Analyse intelligente des douleurs clients, personnalisation des messages à grande échelle, automation des campagnes. Intégré à vos outils CRM et emailing.',
-          roi_detail: 'ROI mensuel moyen : 5 000€ pour un coût de 299€/mois',
-          time_saved: '25h/semaine',
-          expertise: 'Expertise des meilleurs commerciaux sectoriels intégrée'
+          impact: 'Amélioration de l\'efficacité de prospection',
+          description: 'Analyse des profils clients, personnalisation des messages, automatisation des campagnes. S\'intègre à vos outils CRM et emailing existants.',
+          roi_detail: 'Retour sur investissement progressif selon l\'usage',
+          time_saved: '15-25h/semaine',
+          expertise: 'Expertise commerciale sectorielle intégrée'
         };
       case 'support':
       case 'client':
         return {
           title: 'Agent IA Support Client Intelligent',
-          impact: '+25% satisfaction client, -80% temps de traitement',
-          description: 'Traitement automatique des demandes récurrentes, escalade intelligente, base de connaissance auto-apprenante. Intégré à vos outils de support.',
-          roi_detail: 'Économie : 15h/semaine d\'un collaborateur senior',
-          time_saved: '30h/semaine',
-          expertise: 'Expertise service client premium intégrée'
+          impact: 'Amélioration de la satisfaction client et réduction des temps de traitement',
+          description: 'Traitement automatique des demandes récurrentes, escalade intelligente, base de connaissance évolutive. S\'intègre à vos outils de support.',
+          roi_detail: 'Optimisation des ressources support existantes',
+          time_saved: '10-20h/semaine',
+          expertise: 'Expertise service client sectorielle intégrée'
         };
       default:
         return {
@@ -146,11 +146,11 @@ export const EnhancedCompactAnalysisResults = ({ auditData, onNewAnalysis }: Enh
         colorClass: 'bg-red-500',
         enhanced_description: {
           title: 'Agent IA Marketing & Acquisition',
-          impact: '+300% efficacité prospection, +40% taux conversion',
-          description: 'Automatise l\'analyse des prospects, personnalise vos messages commerciaux, gère vos campagnes emailing et suit vos conversions. Expertise des meilleurs commerciaux intégrée.',
-          roi_detail: 'ROI : 5 000€/mois pour 299€/mois d\'investissement',
-          time_saved: '25h/semaine',
-          expertise: 'Intègre les techniques des top performers commerciaux'
+          impact: 'Amélioration de l\'efficacité prospection et du taux de conversion',
+          description: 'Automatise l\'analyse des prospects, personnalise vos messages commerciaux, gère vos campagnes emailing et suit vos conversions. Expertise commerciale intégrée.',
+          roi_detail: 'Retour sur investissement progressif selon l\'usage',
+          time_saved: '15-25h/semaine',
+          expertise: 'Intègre les meilleures pratiques commerciales sectorielles'
         }
       },
       {
@@ -159,11 +159,11 @@ export const EnhancedCompactAnalysisResults = ({ auditData, onNewAnalysis }: Enh
         colorClass: 'bg-green-600',
         enhanced_description: {
           title: 'Agent IA Support Client Expert',
-          impact: '+25% satisfaction, -80% temps traitement',
-          description: 'Répond automatiquement aux questions récurrentes, qualifie les demandes complexes, gère les relances. Expertise service client premium intégrée.',
-          roi_detail: 'Économie équivalent à 1 ETP senior',
-          time_saved: '30h/semaine',
-          expertise: 'Savoir-faire des meilleurs experts service client'
+          impact: 'Amélioration de la satisfaction et réduction du temps de traitement',
+          description: 'Répond automatiquement aux questions récurrentes, qualifie les demandes complexes, gère les relances. Expertise service client intégrée.',
+          roi_detail: 'Optimisation des ressources support existantes',
+          time_saved: '10-20h/semaine',
+          expertise: 'Savoir-faire service client sectoriel'
         }
       }
     ];
@@ -187,26 +187,26 @@ export const EnhancedCompactAnalysisResults = ({ auditData, onNewAnalysis }: Enh
         </p>
       </div>
 
-      {/* KPIs avec couleurs thème */}
-      <div className="grid grid-cols-3 gap-3 mb-8">
-        <Card className="border-2 border-black shadow-[2px_2px_0px_#000000] bg-black text-white text-center">
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-accent-warning mb-1">{auditData.score}%</div>
-            <p className="text-xs text-white">Potentiel</p>
+      {/* KPIs avec couleurs thème et design amélioré */}
+      <div className="grid grid-cols-3 gap-4 mb-8">
+        <Card className="border-2 border-black shadow-[2px_2px_0px_#000000] bg-black text-white">
+          <CardContent className="p-6 text-center flex flex-col items-center justify-center h-full">
+            <div className="text-3xl font-bold text-accent-warning mb-2">{auditData.score}%</div>
+            <p className="text-sm font-medium text-white">Potentiel</p>
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-black shadow-[2px_2px_0px_#000000] bg-accent-success text-white text-center">
-          <CardContent className="p-4">
-            <div className="text-lg font-bold mb-1">{auditData.time_saved}</div>
-            <p className="text-xs text-white">Temps libéré</p>
+        <Card className="border-2 border-black shadow-[2px_2px_0px_#000000] bg-accent-success text-white">
+          <CardContent className="p-6 text-center flex flex-col items-center justify-center h-full">
+            <div className="text-xl font-bold mb-2">{auditData.time_saved}</div>
+            <p className="text-sm font-medium text-white">Temps libéré</p>
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-black shadow-[2px_2px_0px_#000000] bg-primary text-primary-foreground text-center">
-          <CardContent className="p-4">
-            <div className="text-lg font-bold mb-1">{auditData.roi_estimate}</div>
-            <p className="text-xs">ROI estimé</p>
+        <Card className="border-2 border-black shadow-[2px_2px_0px_#000000] bg-primary text-primary-foreground">
+          <CardContent className="p-6 text-center flex flex-col items-center justify-center h-full">
+            <div className="text-lg font-bold mb-2 leading-tight">{auditData.roi_estimate}</div>
+            <p className="text-sm font-medium">ROI estimé</p>
           </CardContent>
         </Card>
       </div>
