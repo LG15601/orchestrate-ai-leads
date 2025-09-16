@@ -87,10 +87,12 @@ const AuditForm = () => {
   const handleProgressiveComplete = (data: any) => {
     console.log('AuditForm: handleProgressiveComplete called with data:', data);
     console.log('AuditForm: URL from progressive data:', data.url);
+    console.log('AuditForm: Full data object keys:', Object.keys(data));
     
     // S'assurer que l'URL est bien présente et valide
     if (!data.url || data.url.trim() === '') {
       console.error('ERROR: No URL in progressive data');
+      console.error('ERROR: Data received:', data);
       toast({
         title: "Erreur",
         description: "URL manquante. Veuillez réessayer.",

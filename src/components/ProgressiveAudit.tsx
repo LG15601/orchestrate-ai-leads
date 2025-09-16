@@ -143,9 +143,10 @@ const ProgressiveAudit = ({ onComplete }: ProgressiveAuditProps) => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       // Toutes les questions sont répondues
+      const finalAnswers = { ...answers, [currentQ.id]: currentAnswer };
       console.log('ProgressiveAudit: All questions completed, calling onComplete');
-      console.log('ProgressiveAudit: answers:', answers);
-      onComplete(answers);
+      console.log('ProgressiveAudit: finalAnswers:', finalAnswers);
+      onComplete(finalAnswers);
       // onStartAnalysis sera appelé depuis AuditForm après la mise à jour des states
     }
   };
