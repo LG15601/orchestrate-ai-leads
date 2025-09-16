@@ -86,6 +86,20 @@ const AuditForm = () => {
 
   const handleProgressiveComplete = (data: any) => {
     console.log('AuditForm: handleProgressiveComplete called with data:', data);
+    console.log('AuditForm: URL from progressive data:', data.url);
+    
+    // S'assurer que l'URL est bien présente et valide
+    if (!data.url || data.url.trim() === '') {
+      console.error('ERROR: No URL in progressive data');
+      toast({
+        title: "Erreur",
+        description: "URL manquante. Veuillez réessayer.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+    
     setProgressiveData(data);
     // URL is already validated and complete from ProgressiveAudit
     setUrl(data.url);
@@ -98,6 +112,8 @@ const AuditForm = () => {
     setUserEmail(data.email);
     setFirstName(data.firstName);
     setLastName(data.lastName);
+    
+    console.log('AuditForm: All states updated successfully');
   };
 
   const handleStartAnalysis = async () => {
@@ -105,9 +121,14 @@ const AuditForm = () => {
     setFormStep('analysis');
     // Petit délai pour s'assurer que les states sont mis à jour
     setTimeout(async () => {
-      console.log('Starting audit with data:', { url, maturityData, userEmail });
+      console.log('Starting audit with data:', { 
+        url, 
+        progressiveDataUrl: progressiveData?.url,
+        maturityData, 
+        userEmail 
+      });
       await handleAuditSubmit();
-    }, 100);
+    }, 200);
   };
 
   const handleUrlSubmit = () => {
@@ -159,6 +180,21 @@ const AuditForm = () => {
     console.log('handleAuditSubmit - auditUrl:', auditUrl);
     console.log('handleAuditSubmit - progressiveData:', progressiveData);
     console.log('handleAuditSubmit - url state:', url);
+    
+    // Vérification critique de l'URL
+    if (!auditUrl || auditUrl.trim() === '') {
+      console.error('CRITICAL ERROR: No URL available for audit');
+      console.error('progressiveData:', progressiveData);
+      console.error('url state:', url);
+      toast({
+        title: "Erreur de configuration",
+        description: "URL manquante pour l'audit. Veuillez réessayer.",
+        variant: "destructive",
+        duration: 5000,
+      });
+      setFormStep('progressive');
+      return;
+    }
     
     setIsLoading(true);
     setProgress(0);
