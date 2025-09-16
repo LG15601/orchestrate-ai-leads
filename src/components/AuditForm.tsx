@@ -192,6 +192,13 @@ const AuditForm = () => {
         VITE_SUPABASE_ANON_KEY: supabaseAnonKey ? 'Present' : 'Missing'
       });
       
+      console.log('Request data:', {
+        url: auditUrl,
+        maturityData,
+        userEmail,
+        auditType: 'free'
+      });
+      
       const response = await fetch(`${supabaseUrl}/functions/v1/ai-audit`, {
         method: 'POST',
         headers: {
