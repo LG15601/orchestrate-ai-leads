@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/components/ui/use-toast";
 import { 
   ArrowRight, 
   CheckCircle, 
@@ -21,6 +22,7 @@ interface ProgressiveAuditProps {
 }
 
 const ProgressiveAudit = ({ onComplete, onStartAnalysis }: ProgressiveAuditProps) => {
+  const { toast } = useToast();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({
     url: '',
