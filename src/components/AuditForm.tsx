@@ -153,11 +153,12 @@ const AuditForm = () => {
   };
 
   const handleAuditSubmit = async () => {
-    // URL is already validated and complete from ProgressiveAudit
-    const auditUrl = url;
+    // Use URL from progressiveData if available, otherwise fallback to url state
+    const auditUrl = progressiveData?.url || url;
     
     console.log('handleAuditSubmit - auditUrl:', auditUrl);
     console.log('handleAuditSubmit - progressiveData:', progressiveData);
+    console.log('handleAuditSubmit - url state:', url);
     
     setIsLoading(true);
     setProgress(0);
