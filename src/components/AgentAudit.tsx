@@ -32,51 +32,52 @@ const AgentAudit = ({ onComplete }: AgentAuditProps) => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isGeneratingRecommendations, setIsGeneratingRecommendations] = useState(false);
 
-  const questions = [
-    {
-      id: 'business_goal',
-      question: 'Quel est votre objectif principal avec l\'automatisation ?',
-      options: [
-        'Réduire les coûts opérationnels',
-        'Augmenter la productivité de l\'équipe',
-        'Améliorer l\'expérience client',
-        'Accélérer la croissance',
-        'Automatiser les tâches répétitives'
-      ]
-    },
-    {
-      id: 'team_size',
-      question: 'Combien de personnes travaillent dans votre entreprise ?',
-      options: [
-        '1-5 employés',
-        '6-20 employés',
-        '21-50 employés',
-        '51-200 employés',
-        '200+ employés'
-      ]
-    },
-    {
-      id: 'current_automation',
-      question: 'Utilisez-vous déjà des outils d\'automatisation ?',
-      options: [
-        'Pas du tout',
-        'Quelques outils basiques (email, calendrier)',
-        'Automatisation partielle de certains processus',
-        'Automatisation avancée dans plusieurs domaines'
-      ]
-    },
-    {
-      id: 'pain_points',
-      question: 'Quel est votre plus gros défi actuel ?',
-      options: [
-        'Trop de tâches manuelles chronophages',
-        'Difficulté à gérer la croissance',
-        'Manque de visibilité sur les performances',
-        'Processus inefficaces',
-        'Ressources limitées'
-      ]
-    }
-  ];
+  const getContextualQuestions = (analysisData: any) => {
+    const baseQuestions = [
+      {
+        id: 'business_validation',
+        question: `D'après notre analyse de ${analysisData?.company_name || 'votre site'}, nous avons identifié que vous évoluez dans le secteur ${analysisData?.sector || 'des services'}. Cette analyse est-elle correcte ?`,
+        options: [
+          'Oui, c\'est exactement notre secteur',
+          'Partiellement, nous sommes plutôt dans...',
+          'Non, nous sommes dans un autre secteur',
+          'Je ne suis pas sûr'
+        ]
+      },
+      {
+        id: 'process_validation',
+        question: `Nous avons identifié ces processus clés sur votre site : ${analysisData?.key_processes?.join(', ') || 'vente, support client, marketing'}. Lesquels vous prennent le plus de temps ?`,
+        options: analysisData?.key_processes?.slice(0, 4) || [
+          'Gestion des ventes et prospects',
+          'Support client et réponses',
+          'Marketing et communication',
+          'Administration et facturation'
+        ]
+      },
+      {
+        id: 'pain_validation',
+        question: `Basé sur votre secteur et vos processus, nous pensons que vos principaux défis sont : ${analysisData?.pain_points?.join(', ') || 'tâches répétitives, gestion du temps'}. Lequel vous impacte le plus ?`,
+        options: analysisData?.pain_points?.slice(0, 4) || [
+          'Trop de tâches manuelles répétitives',
+          'Difficulté à suivre tous les prospects',
+          'Manque de temps pour le développement',
+          'Processus de communication inefficaces'
+        ]
+      },
+      {
+        id: 'automation_priority',
+        question: `Parmi ces opportunités d'automatisation que nous avons identifiées pour votre business : ${analysisData?.automation_opportunities?.join(', ') || 'chatbot, email marketing, CRM'}, laquelle vous ferait gagner le plus de temps ?`,
+        options: analysisData?.automation_opportunities?.slice(0, 4) || [
+          'Automatisation du support client',
+          'Gestion automatisée des leads',
+          'Communication marketing automatisée',
+          'Processus administratifs automatisés'
+        ]
+      }
+    ];
+    
+    return baseQuestions;
+  };
 
   const handleUrlSubmit = async () => {
     if (!url || !url.startsWith('https://')) {
@@ -93,22 +94,40 @@ const AgentAudit = ({ onComplete }: AgentAuditProps) => {
     setCurrentStep('analysis');
 
     try {
-      // Simulation de l'analyse du site
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      // Analyse réelle du site via Supabase
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
-      // Données simulées basées sur l'URL
-      const mockAnalysis = {
-        url: url,
-        companyName: url.split('//')[1]?.split('.')[0] || 'Entreprise',
-        sector: 'Business Services',
-        technologies: ['Site Web', 'CMS'],
-        keyFeatures: ['Présentation entreprise', 'Services', 'Contact'],
-        automationPotential: 75
-      };
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error('Configuration Supabase manquante');
+      }
 
-      setAnalysisData(mockAnalysis);
-      setCurrentStep('questions');
+      const response = await fetch(`${supabaseUrl}/functions/v1/ai-audit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`
+        },
+        body: JSON.stringify({ 
+          url: url,
+          auditType: 'educational'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur d'analyse: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      
+      if (responseData.success && responseData.data) {
+        setAnalysisData(responseData.data);
+        setCurrentStep('questions');
+      } else {
+        throw new Error('Aucune donnée d\'analyse reçue');
+      }
     } catch (error) {
+      console.error('Erreur d\'analyse:', error);
       toast({
         title: "Erreur d'analyse",
         description: "Impossible d'analyser le site. Veuillez réessayer.",
@@ -124,7 +143,9 @@ const AgentAudit = ({ onComplete }: AgentAuditProps) => {
   const handleQuestionAnswer = (questionId: string, answer: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
     
-    if (currentQuestion < questions.length - 1) {
+    const contextualQuestions = getContextualQuestions(analysisData);
+    
+    if (currentQuestion < contextualQuestions.length - 1) {
       setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1);
       }, 1000);
@@ -141,39 +162,72 @@ const AgentAudit = ({ onComplete }: AgentAuditProps) => {
     setCurrentStep('recommendations');
 
     try {
-      // Simulation de génération de recommandations
+      // Génération de recommandations basées sur l'analyse et les réponses
       await new Promise(resolve => setTimeout(resolve, 2000));
 
+      // Analyse des réponses pour personnaliser les recommandations
+      const businessValidation = answers.business_validation;
+      const processPriority = answers.process_validation;
+      const painPoint = answers.pain_validation;
+      const automationPriority = answers.automation_priority;
+
+      // Génération de recommandations intelligentes
       const recommendations = {
-        companyName: analysisData.companyName,
-        url: analysisData.url,
-        score: analysisData.automationPotential,
-        recommendations: [
+        companyName: analysisData.company_name || 'Votre entreprise',
+        url: analysisData.url || url,
+        score: analysisData.score || 75,
+        businessContext: {
+          sector: analysisData.sector,
+          businessModel: analysisData.business_model,
+          teamSize: analysisData.team_size,
+          currentMaturity: analysisData.current_maturity
+        },
+        insights: analysisData.strategic_insights || "Votre entreprise présente un fort potentiel d'automatisation dans plusieurs domaines clés.",
+        recommendations: analysisData.specialized_agents?.map((agent: any) => ({
+          title: agent.name,
+          description: agent.role,
+          impact: agent.business_impact,
+          timeSaved: agent.time_saved,
+          priority: agent.name.includes('Support') || agent.name.includes('Client') ? 'Haute' : 'Moyenne',
+          tasks: agent.key_tasks,
+          integrations: agent.integrations,
+          roiTimeline: agent.roi_timeline
+        })) || [
           {
             title: "Agent IA de Support Client",
-            description: "Automatisez 80% des questions clients récurrentes",
+            description: "Automatisez 80% des questions clients récurrentes basé sur votre secteur",
             impact: "Économisez 15h/semaine",
-            priority: "Haute"
+            priority: "Haute",
+            tasks: ["Réponses automatiques", "Qualification des leads", "Planification de rendez-vous"],
+            integrations: ["Site web", "Email", "Calendrier"],
+            roiTimeline: "ROI en 2 mois"
           },
           {
-            title: "Automatisation Email Marketing",
-            description: "Séquences automatisées pour la génération de leads",
+            title: "Automatisation Marketing",
+            description: "Séquences automatisées adaptées à votre business model",
             impact: "+40% de conversion",
-            priority: "Haute"
+            priority: "Haute",
+            tasks: ["Email marketing", "Suivi prospects", "Nurturing automatisé"],
+            integrations: ["CRM", "Email", "Réseaux sociaux"],
+            roiTimeline: "ROI en 3 mois"
           },
           {
-            title: "Assistant de Planification",
-            description: "Gestion automatique des rendez-vous et tâches",
+            title: "Assistant Opérationnel",
+            description: "Automatisation des tâches administratives chronophages",
             impact: "Économisez 10h/semaine",
-            priority: "Moyenne"
+            priority: "Moyenne",
+            tasks: ["Gestion documents", "Facturation", "Reporting"],
+            integrations: ["Comptabilité", "Documents", "Analytics"],
+            roiTimeline: "ROI en 4 mois"
           }
         ],
-        roi: "300% en 6 mois",
-        timeSaved: "25h/semaine",
-        nextSteps: [
-          "Planification d'un appel de découverte",
-          "Déploiement du premier agent IA",
-          "Formation de l'équipe"
+        roi: analysisData.roi_estimate || "300% en 6 mois",
+        timeSaved: analysisData.time_saved || "25h/semaine",
+        competitiveAdvantage: analysisData.competitive_advantage || "L'automatisation vous donnera un avantage concurrentiel significatif",
+        nextSteps: analysisData.implementation_roadmap || [
+          "Planification d'un appel de découverte personnalisé",
+          "Déploiement du premier agent IA adapté à votre secteur",
+          "Formation de l'équipe et intégration des outils existants"
         ]
       };
 
@@ -272,7 +326,8 @@ const AgentAudit = ({ onComplete }: AgentAuditProps) => {
   );
 
   const renderQuestionsStep = () => {
-    const currentQ = questions[currentQuestion];
+    const contextualQuestions = getContextualQuestions(analysisData);
+    const currentQ = contextualQuestions[currentQuestion];
     
     return (
       <Card className="card-bold bg-white">
@@ -285,10 +340,10 @@ const AgentAudit = ({ onComplete }: AgentAuditProps) => {
           </div>
           
           <CardTitle className="text-2xl font-bold text-black mb-2">
-            Questions personnalisées
+            Validation de notre analyse
           </CardTitle>
           <p className="text-black/70 font-medium">
-            Question {currentQuestion + 1} sur {questions.length}
+            Question {currentQuestion + 1} sur {contextualQuestions.length}
           </p>
         </CardHeader>
 

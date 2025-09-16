@@ -18,14 +18,26 @@ interface AgentAuditResultsProps {
     companyName: string;
     url: string;
     score: number;
+    businessContext: {
+      sector: string;
+      businessModel: string;
+      teamSize: string;
+      currentMaturity: string;
+    };
+    insights: string;
     recommendations: Array<{
       title: string;
       description: string;
       impact: string;
+      timeSaved: string;
       priority: string;
+      tasks: string[];
+      integrations: string[];
+      roiTimeline: string;
     }>;
     roi: string;
     timeSaved: string;
+    competitiveAdvantage: string;
     nextSteps: string[];
   };
   onNewAnalysis: () => void;
@@ -55,6 +67,45 @@ const AgentAuditResults = ({ recommendations, onNewAnalysis }: AgentAuditResults
           Analyse complète de {recommendations.companyName} par notre agent IA
         </p>
       </div>
+
+      {/* Analyse Contextuelle */}
+      <Card className="card-bold bg-white">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-black flex items-center gap-2">
+            <Bot className="w-6 h-6 text-accent-success" />
+            Notre Analyse de Votre Business
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-bold text-black mb-2">Secteur d'activité</h4>
+                <p className="text-black/70">{recommendations.businessContext.sector}</p>
+              </div>
+              <div>
+                <h4 className="font-bold text-black mb-2">Modèle économique</h4>
+                <p className="text-black/70">{recommendations.businessContext.businessModel}</p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-bold text-black mb-2">Taille d'équipe</h4>
+                <p className="text-black/70">{recommendations.businessContext.teamSize}</p>
+              </div>
+              <div>
+                <h4 className="font-bold text-black mb-2">Maturité digitale actuelle</h4>
+                <p className="text-black/70">{recommendations.businessContext.currentMaturity}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-accent-success/10 border-2 border-accent-success rounded-lg p-6">
+            <h4 className="font-bold text-black mb-3">💡 Insights Stratégiques</h4>
+            <p className="text-black/80 font-medium">{recommendations.insights}</p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Score et Métriques */}
       <div className="grid md:grid-cols-3 gap-6">
@@ -106,13 +157,59 @@ const AgentAuditResults = ({ recommendations, onNewAnalysis }: AgentAuditResults
                   {rec.priority}
                 </Badge>
               </div>
-              <p className="text-black/70 font-medium mb-3">{rec.description}</p>
-              <div className="flex items-center gap-2 text-accent-success font-bold">
-                <TrendingUp className="w-4 h-4" />
-                <span>Impact: {rec.impact}</span>
+              <p className="text-black/70 font-medium mb-4">{rec.description}</p>
+              
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <h5 className="font-bold text-black mb-2">🎯 Tâches automatisées</h5>
+                  <ul className="text-sm text-black/70 space-y-1">
+                    {rec.tasks.map((task, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-accent-success" />
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-bold text-black mb-2">🔗 Intégrations</h5>
+                  <ul className="text-sm text-black/70 space-y-1">
+                    {rec.integrations.map((integration, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <CheckCircle className="w-3 h-3 text-accent-success" />
+                        {integration}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-accent-success font-bold">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Impact: {rec.impact}</span>
+                </div>
+                <div className="text-sm text-black/70 font-medium">
+                  {rec.roiTimeline}
+                </div>
               </div>
             </div>
           ))}
+        </CardContent>
+      </Card>
+
+      {/* Avantage Concurrentiel */}
+      <Card className="card-bold bg-white">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-black flex items-center gap-2">
+            <Target className="w-6 h-6 text-accent-success" />
+            Avantage Concurrentiel
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-accent-success/10 border-2 border-accent-success rounded-lg p-6">
+            <p className="text-black/80 font-medium text-lg">{recommendations.competitiveAdvantage}</p>
+          </div>
         </CardContent>
       </Card>
 
