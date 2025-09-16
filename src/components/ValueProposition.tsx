@@ -22,7 +22,7 @@ const ValueProposition = () => {
                 <BarChart3 className="w-10 h-10 text-primary-foreground" />
               </div>
               <div className="text-4xl font-bold text-primary-foreground mb-2">
-                <span className="counter" data-target="78">0</span>%
+                <span className="counter" data-target="78">XX</span>%
               </div>
             </div>
             <h3 className="text-xl font-bold text-primary-foreground mb-4">
@@ -41,7 +41,7 @@ const ValueProposition = () => {
                 <Clock className="w-10 h-10 text-accent-success-foreground" />
               </div>
               <div className="text-4xl font-bold text-accent-success-foreground mb-2">
-                <span className="counter" data-target="120">0</span>h
+                <span className="counter" data-target="120">XX</span>h
               </div>
             </div>
             <h3 className="text-xl font-bold text-accent-success-foreground mb-4">
@@ -60,7 +60,7 @@ const ValueProposition = () => {
                 <Users className="w-10 h-10 text-accent-warning-foreground" />
               </div>
               <div className="text-4xl font-bold text-accent-warning-foreground mb-2">
-                <span className="counter" data-target="12">0</span>+
+                <span className="counter" data-target="12">XX</span>+
               </div>
             </div>
             <h3 className="text-xl font-bold text-accent-warning-foreground mb-4">

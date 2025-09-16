@@ -16,7 +16,10 @@ interface AuditRequest {
     teamSize: string;
   };
   userEmail?: string;
-  auditType?: 'free' | 'premium';
+  auditType?: 'free' | 'premium' | 'conversational' | 'advanced_ai_agent';
+  includeScraping?: boolean;
+  includeAnalysis?: boolean;
+  includeRecommendations?: boolean;
 }
 
 interface AuditResult {
@@ -42,7 +45,7 @@ serve(async (req) => {
   }
 
   try {
-    const { url, maturityData, userEmail, auditType = 'free' }: AuditRequest = await req.json();
+    const { url, maturityData, userEmail, auditType = 'free', includeScraping = true, includeAnalysis = true, includeRecommendations = true }: AuditRequest = await req.json();
     
     if (!url) {
       throw new Error('URL is required');
@@ -190,65 +193,110 @@ serve(async (req) => {
     const possibleCompanyName = domainParts[0];
 
     const analysisPrompt = `
-    Tu es un agent IA conversationnel expert en audit business et automatisation. Tu es équipé de Firecrawl pour analyser les sites web en profondeur et tu peux faire des recherches web pour enrichir ton analyse.
+    Tu es un expert en audit business et recommandation d'agents IA spécialisés pour OrchestraConnect.fr. Tu analyses les entreprises pour identifier les opportunités d'automatisation par pôles métier.
 
-    MISSION: Analyser cette entreprise pour préparer une conversation éducative et personnalisée qui démontrera ta compréhension approfondie de leur business.
+    BASE DE CONNAISSANCES - AGENTS IA MÉTIER:
+    
+    Les agents IA OrchestraConnect sont des intelligences artificielles spécialisées qui vont bien au-delà des assistants conversationnels génériques comme ChatGPT ou Claude. Ils sont conçus pour automatiser, professionnaliser et personnaliser des tâches métier précises dans les PME.
+
+    AVANTAGES DES AGENTS IA MÉTIER vs IA GÉNÉRALISTES:
+    - Spécialisation secteur/métier (expertise comptable, RH, industrie, santé)
+    - Intégration de la réglementation française et des outils PME
+    - Made in France: hébergement souverain RGPD, support local
+    - Déploiement en 48h, usage Plug & Play, zéro code requis
+    - Collaboration humaine augmentée avec apprentissage personnalisé
+    - ROI moyen de 300% dès la première année
+    - Libération de 15 à 100h/mois selon le métier
+
+    EXEMPLES D'AGENTS IA SPÉCIALISÉS:
+    - Gestionnaire client pour experts-comptables
+    - Assistant RH pour pré-sélectionner rapidement des CV
+    - Agent commercial pour analyser et personnaliser la prospection
+    - Agent administratif qui gère automatiquement la facturation ou les relances clients
+
+    MISSION: Analyser cette entreprise et fournir une analyse complète par secteur d'activité avec recommandations d'agents IA OrchestraConnect par pôles métier.
 
     DONNÉES À ANALYSER:
     URL: ${url}
     DOMAIN: ${domain}
-    CONTENU DU SITE (extrait avec Firecrawl): ${content.slice(0, 20000)}
+    CONTENU DU SITE: ${content.slice(0, 20000)}
     CONTEXTE ADDITIONNEL: ${additionalContext}
     ${maturityContext}
 
-    OBJECTIF DE L'ANALYSE:
-    Préparer une conversation éducative qui montrera que tu as bien cerné:
-    1. Le secteur d'activité et le business model
-    2. Les processus clés et les points de friction
-    3. Les opportunités d'automatisation spécifiques
-    4. Les défis uniques de cette entreprise
+    OBJECTIF: Fournir une analyse détaillée par pôles métier avec:
+    1. Identification précise du secteur d'activité
+    2. Analyse des 8 pôles métier principaux (Admin, Compta, Marketing, Commerce, Finance, Logistique, RH, Support)
+    3. Tâches automatisables par pôle avec agents IA OrchestraConnect spécialisés
+    4. Phases à forte valeur ajoutée boostables par IA
+    5. Focus sur l'automatisation intelligente et l'accès à l'expertise premium
 
-    RÉPONDS UNIQUEMENT EN JSON VALIDE (pas de markdown, pas de backticks):
+    RÉPONDS UNIQUEMENT EN JSON VALIDE:
     {
-      "score": (0-100 potentiel d'automatisation basé sur l'analyse),
-      "company_name": "nom exact de l'entreprise extrait du contenu",
-      "sector": "secteur d'activité spécifique avec sous-segment",
-      "business_model": "modèle économique identifié (B2B, B2C, marketplace, SaaS, etc.)",
-      "team_size": "${maturityData?.teamSize || 'estimé depuis le contenu'}",
-      "current_maturity": "niveau de maturité digitale actuel (Débutant/Intermédiaire/Avancé)",
-      "key_processes": ["3-5 processus métier critiques identifiés sur le site"],
-      "pain_points": ["3-5 points de friction stratégiques identifiés"],
-      "automation_opportunities": ["3-4 opportunités d'automatisation prioritaires"],
-      "specialized_agents": [
+      "score": (0-100 potentiel d'automatisation),
+      "company_name": "nom de l'entreprise",
+      "sector": "secteur d'activité détaillé",
+      "business_model": "modèle économique (B2B, B2C, SaaS, etc.)",
+      "team_size": "${maturityData?.teamSize || 'estimé'}",
+      "current_maturity": "Débutant/Intermédiaire/Avancé",
+      "key_processes": ["processus métier identifiés"],
+      "pain_points": ["points de friction"],
+      "automation_opportunities": ["opportunités d'automatisation"],
+      "technologies": ["technologies identifiées"],
+      "business_poles": [
         {
-          "name": "Nom de l'agent IA spécialisé",
-          "business_impact": "Impact business spécifique (ex: +30% de leads qualifiés)",
-          "role": "Rôle stratégique dans l'organisation",
-          "key_tasks": ["2-3 tâches critiques automatisées"],
-          "time_saved": "X heures/semaine économisées",
-          "integrations": ["outils métier connectés"],
-          "roi_timeline": "ROI attendu en X mois"
+          "name": "Administration",
+          "tasks": ["tâches actuelles du pôle"],
+          "automatable_tasks": ["tâches automatisables"],
+          "agents": ["agents IA OrchestraConnect spécialisés"],
+          "time_saved": "X-Y heures/semaine",
+          "impact": "impact business"
         }
       ],
-      "roi_estimate": "estimation ROI précise",
-      "time_saved": "X-Y heures/semaine économisées",
-      "strategic_insights": "3 insights stratégiques personnalisés pour la conversation",
-      "competitive_advantage": "Avantage concurrentiel durable via l'automatisation",
-      "implementation_roadmap": [
-        "Phase 1: Contact & Analyse (48h)",
-        "Phase 2: Agent Prêt à l'Emploi (7 jours)",
-        "Phase 3: Écosystème Complet (30 jours)"
+      "high_value_phases": [
+        {
+          "phase": "nom de la phase",
+          "description": "description détaillée",
+          "current_time": "temps actuel",
+          "ai_acceleration": "accélération par IA",
+          "value_added": "valeur ajoutée",
+          "agents": ["agents IA concernés"]
+        }
       ],
-      "risk_assessment": "Évaluation des risques avec mitigation",
-      "success_metrics": ["3-5 KPIs pour mesurer le succès"]
+      "specialized_agents": [
+        {
+          "name": "Agent IA OrchestraConnect spécialisé",
+          "description": "description détaillée de l'agent spécialisé",
+          "impact": "impact business mesurable",
+          "time_saved": "X heures/semaine",
+          "priority": "Haute/Moyenne/Faible",
+          "tasks": ["tâches automatisées spécifiques"],
+          "integrations": ["outils PME connectés"],
+          "roi_timeline": "ROI en X mois",
+          "pole": "pôle métier concerné",
+          "expertise_level": "niveau d'expertise intégré",
+          "compliance": "conformité réglementaire française",
+          "deployment_time": "délai de déploiement",
+          "training_included": "formation incluse"
+        }
+      ],
+      "roi_estimate": "estimation ROI",
+      "time_saved": "X-Y heures/semaine",
+      "strategic_insights": "insights stratégiques",
+      "competitive_advantage": "avantage concurrentiel",
+      "implementation_roadmap": ["phases d'implémentation"],
+      "risk_assessment": "évaluation des risques",
+      "success_metrics": ["KPIs de succès"]
     }
 
     EXIGENCES:
-    - Analyse précise et contextuelle
-    - Données extraites du contenu réel du site
-    - Prêt pour une conversation éducative
-    - Recommandations spécifiques à cette entreprise
+    - Analyse par pôles métier détaillée avec focus sur les agents IA OrchestraConnect
+    - Recommandations d'agents IA spécialisés par pôle (pas d'IA généralistes)
+    - Identification des phases à forte valeur ajoutée boostables par IA
+    - Mise en avant des avantages des agents IA métier vs IA généralistes
+    - Focus sur l'automatisation intelligente et l'accès à l'expertise premium
     - Réponse 100% en français
+    - Insister sur le ROI de 300% et la libération de 15-100h/mois
+    - Mentionner la conformité RGPD et le support local français
     `;
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');

@@ -20,7 +20,7 @@
     --primary-dark: 0 0% 0%;
     --accent-success: 142 35% 52%; /* #7C9885 - Vert sauge harmonieux */
     --accent-success-foreground: 0 0% 100%;
-    --accent-warning: 45 96% 64%; /* #FFE066 - Jaune accent gardé */
+    --accent-warning: 65 100% 75%; /* #f5ff7d - Nouveau jaune */
     --accent-warning-foreground: 0 0% 0%;
     --accent-orange: 0 85% 60%; /* #F87171 - Rouge/Rose */
     --accent-orange-foreground: 0 0% 100%;
@@ -72,7 +72,7 @@
     --primary-dark: 33 30% 85%;
     --accent-success: 142 35% 52%;
     --accent-success-foreground: 0 0% 0%;
-    --accent-warning: 45 96% 64%;
+    --accent-warning: 65 100% 75%;
     --accent-warning-foreground: 0 0% 0%;
     --accent-orange: 0 85% 60%;
     --accent-orange-foreground: 0 0% 0%;

@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import LeadCapture from "./LeadCapture";
 import { 
   ArrowRight, 
   CheckCircle, 
@@ -11,7 +13,8 @@ import {
   Calendar,
   Download,
   RefreshCw,
-  Bot
+  Bot,
+  Mail
 } from "lucide-react";
 
 interface AgentAuditResultsProps {
@@ -45,6 +48,9 @@ interface AgentAuditResultsProps {
 }
 
 const AgentAuditResults = ({ recommendations, onNewAnalysis }: AgentAuditResultsProps) => {
+  const [showLeadCapture, setShowLeadCapture] = useState(false);
+  const [leadCaptured, setLeadCaptured] = useState(false);
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'Haute': return 'bg-red-100 text-red-800 border-red-200';
@@ -52,6 +58,11 @@ const AgentAuditResults = ({ recommendations, onNewAnalysis }: AgentAuditResults
       case 'Basse': return 'bg-green-100 text-green-800 border-green-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
+  };
+
+  const handleLeadCaptured = (leadData: any) => {
+    setLeadCaptured(true);
+    setShowLeadCapture(false);
   };
 
   return (
@@ -235,6 +246,38 @@ const AgentAuditResults = ({ recommendations, onNewAnalysis }: AgentAuditResults
           </div>
         </CardContent>
       </Card>
+
+      {/* Lead Capture Section */}
+      {!leadCaptured && (
+        <Card className="card-bold bg-gradient-to-r from-accent-success/10 to-accent-success/5 border-2 border-accent-success">
+          <CardContent className="p-8 text-center">
+            <Mail className="w-16 h-16 text-accent-success mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-foreground mb-4">
+              📧 Recevez votre rapport détaillé par email
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Remplissez vos coordonnées pour recevoir votre analyse complète, 
+              des recommandations personnalisées et être recontacté par nos experts IA.
+            </p>
+            <Button
+              onClick={() => setShowLeadCapture(true)}
+              size="lg"
+              className="bg-accent-success text-white hover:bg-accent-success/90 font-bold px-8 py-3 border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
+            >
+              <Mail className="w-5 h-5 mr-2" />
+              Recevoir mon rapport détaillé
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Lead Capture Form */}
+      {showLeadCapture && (
+        <LeadCapture 
+          onLeadCaptured={handleLeadCaptured}
+          auditResult={recommendations}
+        />
+      )}
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
