@@ -10,7 +10,8 @@ import {
   Zap,
   Calendar,
   Download,
-  RefreshCw
+  RefreshCw,
+  Bot
 } from "lucide-react";
 
 interface AgentAuditResultsProps {

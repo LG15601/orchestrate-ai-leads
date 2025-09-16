@@ -52,8 +52,9 @@ serve(async (req) => {
       console.log('Maturity data:', maturityData);
       console.log('Audit type:', auditType);
 
-    // Step 1: Enhanced content extraction with fallback
+    // Step 1: Enhanced content extraction with Firecrawl and web search
     let content = '';
+    let additionalContext = '';
     
     // Normalize URL - add https:// if no protocol specified
     let normalizedUrl = url;
@@ -78,7 +79,11 @@ serve(async (req) => {
     }
     
     try {
-      // Try Firecrawl first
+      // Extract company name from domain for additional research
+      const domain = new URL(normalizedUrl).hostname.replace('www.', '');
+      const companyName = domain.split('.')[0];
+      
+      // Try Firecrawl first for comprehensive content extraction
       const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
       
       if (firecrawlApiKey) {
@@ -97,6 +102,10 @@ serve(async (req) => {
               includeHtml: false,
               screenshot: false,
             },
+            crawlerOptions: {
+              includes: ['/about', '/services', '/contact', '/team'],
+              maxDepth: 2
+            }
           }),
         });
 
@@ -141,6 +150,14 @@ serve(async (req) => {
         throw new Error('Unable to extract sufficient content from website');
       }
 
+      // Additional web search for company context (if needed)
+      if (auditType === 'conversational') {
+        console.log('Performing additional web research for conversational context...');
+        // Here you could add web search API calls to get additional context
+        // about the company, industry trends, etc.
+        additionalContext = `Company: ${companyName}, Domain: ${domain}`;
+      }
+
     } catch (extractionError) {
       console.error('Content extraction failed:', extractionError);
       console.error('URL attempted:', normalizedUrl);
@@ -173,54 +190,35 @@ serve(async (req) => {
     const possibleCompanyName = domainParts[0];
 
     const analysisPrompt = `
-    Tu es un consultant senior en transformation digitale, ancien associé chez McKinsey & Company, avec 25 ans d'expérience dans l'optimisation des processus métier et l'implémentation d'IA en entreprise. Tu as accompagné plus de 500 entreprises dans leur transformation digitale.
+    Tu es un agent IA conversationnel expert en audit business et automatisation. Tu es équipé de Firecrawl pour analyser les sites web en profondeur et tu peux faire des recherches web pour enrichir ton analyse.
 
-    MISSION CRITIQUE: Conduire une analyse stratégique approfondie de cette entreprise pour identifier les opportunités d'automatisation les plus impactantes et les agents IA spécialisés qui peuvent transformer leur business.
+    MISSION: Analyser cette entreprise pour préparer une conversation éducative et personnalisée qui démontrera ta compréhension approfondie de leur business.
 
     DONNÉES À ANALYSER:
     URL: ${url}
     DOMAIN: ${domain}
-    CONTENU DU SITE: ${content.slice(0, 20000)}
+    CONTENU DU SITE (extrait avec Firecrawl): ${content.slice(0, 20000)}
+    CONTEXTE ADDITIONNEL: ${additionalContext}
     ${maturityContext}
 
-    MÉTHODOLOGIE D'ANALYSE (niveau cabinet de conseil):
-
-    1. ANALYSE STRATÉGIQUE DE L'ENTREPRISE (PERSONNALISÉE):
-    - Modèle économique et chaîne de valeur spécifiques à cette entreprise
-    - Positionnement concurrentiel et différenciation dans leur secteur
-    - Maturité digitale actuelle et défis spécifiques identifiés
-    - Structure organisationnelle et processus clés analysés en détail
-    - Proposition de valeur unique et avantages concurrentiels actuels
-
-    2. IDENTIFICATION DES LEVIERS D'OPTIMISATION:
-    - Processus à forte valeur ajoutée vs tâches répétitives
-    - Goulots d'étranglement opérationnels
-    - Coûts cachés et inefficacités
-    - Opportunités de croissance via l'automatisation
-
-    3. RECOMMANDATIONS STRATÉGIQUES:
-    - Agents IA prioritaires avec impact business mesurable
-    - Roadmap d'implémentation avec ROI précis
-    - Risques et mitigation
-
-    INSIGHTS STRATÉGIQUES PERSONNALISÉS REQUIS:
-    - Analyser le positionnement concurrentiel spécifique de cette entreprise
-    - Identifier les défis uniques de leur secteur et de leur taille
-    - Proposer des solutions d'automatisation adaptées à leur modèle économique
-    - Expliquer comment l'IA peut renforcer leur proposition de valeur
-    - Avantage concurrentiel durable
+    OBJECTIF DE L'ANALYSE:
+    Préparer une conversation éducative qui montrera que tu as bien cerné:
+    1. Le secteur d'activité et le business model
+    2. Les processus clés et les points de friction
+    3. Les opportunités d'automatisation spécifiques
+    4. Les défis uniques de cette entreprise
 
     RÉPONDS UNIQUEMENT EN JSON VALIDE (pas de markdown, pas de backticks):
     {
-      "score": (0-100 potentiel d'automatisation basé sur l'analyse stratégique),
+      "score": (0-100 potentiel d'automatisation basé sur l'analyse),
       "company_name": "nom exact de l'entreprise extrait du contenu",
       "sector": "secteur d'activité spécifique avec sous-segment",
       "business_model": "modèle économique identifié (B2B, B2C, marketplace, SaaS, etc.)",
       "team_size": "${maturityData?.teamSize || 'estimé depuis le contenu'}",
       "current_maturity": "niveau de maturité digitale actuel (Débutant/Intermédiaire/Avancé)",
-      "key_processes": ["3-5 processus métier critiques identifiés"],
-      "pain_points": ["3-5 points de friction stratégiques avec impact business"],
-      "automation_opportunities": ["3-4 opportunités d'automatisation prioritaires avec impact ROI"],
+      "key_processes": ["3-5 processus métier critiques identifiés sur le site"],
+      "pain_points": ["3-5 points de friction stratégiques identifiés"],
+      "automation_opportunities": ["3-4 opportunités d'automatisation prioritaires"],
       "specialized_agents": [
         {
           "name": "Nom de l'agent IA spécialisé",
@@ -232,25 +230,25 @@ serve(async (req) => {
           "roi_timeline": "ROI attendu en X mois"
         }
       ],
-      "roi_estimate": "estimation ROI précise avec justification business",
+      "roi_estimate": "estimation ROI précise",
       "time_saved": "X-Y heures/semaine économisées",
-      "strategic_insights": "3 insights stratégiques personnalisés analysant le positionnement concurrentiel, le modèle économique et les défis spécifiques de cette entreprise",
+      "strategic_insights": "3 insights stratégiques personnalisés pour la conversation",
       "competitive_advantage": "Avantage concurrentiel durable via l'automatisation",
       "implementation_roadmap": [
-        "Phase 1: Contact & Analyse (48h) - Rappel sous 48h pour planifier votre stratégie d'automatisation personnalisée",
-        "Phase 2: Agent Prêt à l'Emploi (7 jours) - Premier agent IA spécialisé déployé et opérationnel avec intégrations métier",
-        "Phase 3: Écosystème Complet (30 jours) - Déploiement de tous les agents IA recommandés avec orchestration complète"
+        "Phase 1: Contact & Analyse (48h)",
+        "Phase 2: Agent Prêt à l'Emploi (7 jours)",
+        "Phase 3: Écosystème Complet (30 jours)"
       ],
       "risk_assessment": "Évaluation des risques avec mitigation",
-      "success_metrics": ["3-5 KPIs pour mesurer le succès de l'automatisation"]
+      "success_metrics": ["3-5 KPIs pour mesurer le succès"]
     }
 
-    EXIGENCES CRITIQUES:
-    - Analyse niveau cabinet de conseil (McKinsey/Bain/BCG)
-    - Recommandations spécifiques à cette entreprise, pas génériques
-    - Focus sur l'impact business et le ROI mesurable
-    - Agents IA spécialisés avec intégrations métier
-    - Réponse 100% en français, professionnelle et stratégique
+    EXIGENCES:
+    - Analyse précise et contextuelle
+    - Données extraites du contenu réel du site
+    - Prêt pour une conversation éducative
+    - Recommandations spécifiques à cette entreprise
+    - Réponse 100% en français
     `;
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');

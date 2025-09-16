@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import AgentAudit from "@/components/AgentAudit";
+import ConversationalAgent from "@/components/ConversationalAgent";
 import AgentAuditResults from "@/components/AgentAuditResults";
 import AuditSteps from "./AuditSteps";
 import ValueProposition from "./ValueProposition";
@@ -54,11 +54,11 @@ const AuditForm = () => {
               Prêt à transformer votre productivité ?
               </h2>
             <p className="text-base text-muted-foreground">
-              Notre agent IA analyse votre site et vous pose des questions pour des recommandations personnalisées
+              Conversationnez avec votre agent IA qui analyse votre site en profondeur et vous guide vers des recommandations personnalisées
               </p>
             </div>
 
-          <AgentAudit 
+          <ConversationalAgent 
             onComplete={handleAuditComplete}
           />
         </div>
