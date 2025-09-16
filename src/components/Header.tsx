@@ -83,12 +83,20 @@ const Header = () => {
 
           {/* CTA Button Desktop */}
           <div className="hidden md:flex items-center">
-            <Button 
-              onClick={() => scrollToSection('audit-form')}
-              className="bg-black text-white hover:bg-gray-800 font-semibold px-6 py-2 rounded-lg transition-colors duration-200"
-            >
-              RÉSERVER UNE DÉMO
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button 
+                onClick={() => window.location.href = '/leads'}
+                className="bg-transparent border border-black text-black hover:bg-black hover:text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200 text-sm"
+              >
+                Dashboard
+              </Button>
+              <Button 
+                onClick={() => scrollToSection('audit-form')}
+                className="bg-black text-white hover:bg-gray-800 font-semibold px-6 py-2 rounded-lg transition-colors duration-200"
+              >
+                RÉSERVER UNE DÉMO
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
