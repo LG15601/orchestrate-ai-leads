@@ -100,7 +100,8 @@ const AuditForm = () => {
 
   const handleProgressiveComplete = (data: any) => {
     setProgressiveData(data);
-    setUrl(normalizeUrl(data.url));
+    const normalizedUrl = normalizeUrl(data.url);
+    setUrl(normalizedUrl);
     setMaturityData({
       currentAiUsage: data.currentAiUsage,
       currentAutomation: '',
@@ -110,6 +111,9 @@ const AuditForm = () => {
     setUserEmail(data.email);
     setFirstName(data.firstName);
     setLastName(data.lastName);
+    
+    // Store the normalized URL for immediate use
+    setProgressiveData(prev => ({ ...prev, normalizedUrl }));
   };
 
   const handleStartAnalysis = async () => {
@@ -165,8 +169,12 @@ const AuditForm = () => {
   };
 
   const handleAuditSubmit = async () => {
-    // URL is already normalized from handleProgressiveComplete
-    const normalizedUrl = url;
+    // Use the normalized URL from progressive data or fallback to url state
+    const normalizedUrl = progressiveData?.normalizedUrl || url;
+    
+    console.log('handleAuditSubmit - normalizedUrl:', normalizedUrl);
+    console.log('handleAuditSubmit - progressiveData:', progressiveData);
+    console.log('handleAuditSubmit - url state:', url);
     
     setIsLoading(true);
     setProgress(0);
