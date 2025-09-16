@@ -51,9 +51,9 @@ const LeadCapture = ({ onLeadCaptured, auditResult, className = "" }: LeadCaptur
         source: formData.source,
         audit_data: auditResult,
         audit_score: auditResult?.score || 0,
-        company_sector: auditResult?.sector || '',
+        company_sector: auditResult?.sector || auditResult?.company_sector || '',
         automation_opportunities: auditResult?.automation_opportunities || [],
-        priority_agents: auditResult?.priority_agents || []
+        priority_agents: auditResult?.specialized_agents || auditResult?.priority_agents || []
       };
 
       // Check if lead already exists
@@ -75,9 +75,9 @@ const LeadCapture = ({ onLeadCaptured, auditResult, className = "" }: LeadCaptur
             updated_at: new Date().toISOString(),
             audit_data: auditResult,
             audit_score: auditResult?.score || 0,
-            company_sector: auditResult?.sector || '',
+            company_sector: auditResult?.sector || auditResult?.company_sector || '',
             automation_opportunities: auditResult?.automation_opportunities || [],
-            priority_agents: auditResult?.priority_agents || []
+            priority_agents: auditResult?.specialized_agents || auditResult?.priority_agents || []
           })
           .eq('id', existingLead.id);
 

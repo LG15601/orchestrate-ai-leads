@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import SimpleAuditForm from "@/components/SimpleAuditForm";
-import AgentAuditResults from "@/components/AgentAuditResults";
+import { TextualAnalysisResults } from "@/components/TextualAnalysisResults";
 import LeadCapture from "@/components/LeadCapture";
 import AuditSteps from "./AuditSteps";
 import ValueProposition from "./ValueProposition";
@@ -68,8 +68,8 @@ const AuditForm = () => {
         <AuditSteps currentStep={4} />
         <section className="py-16 bg-background" id="audit-form">
           <div className="container mx-auto px-6">
-            <AgentAuditResults 
-              recommendations={auditResult} 
+            <TextualAnalysisResults 
+              auditData={auditResult} 
               onNewAnalysis={handleNewAnalysis}
             />
           </div>

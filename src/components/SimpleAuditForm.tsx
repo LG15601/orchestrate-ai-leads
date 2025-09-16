@@ -66,7 +66,6 @@ const SimpleAuditForm = ({ onComplete }: SimpleAuditFormProps) => {
       
       if (responseData.success && responseData.data) {
         setAnalysisData(responseData.data);
-        setCurrentStep('results');
         
         toast({
           title: "🎉 Analyse terminée !",
@@ -74,7 +73,7 @@ const SimpleAuditForm = ({ onComplete }: SimpleAuditFormProps) => {
           duration: 4000,
         });
 
-        // Appeler onComplete avec les données d'analyse
+        // Appeler onComplete avec les données d'analyse pour passer à l'étape de capture de leads
         onComplete(responseData.data);
       } else {
         throw new Error('Aucune donnée d\'analyse reçue');
@@ -186,10 +185,6 @@ const SimpleAuditForm = ({ onComplete }: SimpleAuditFormProps) => {
       </CardContent>
     </Card>
   );
-
-  if (currentStep === 'results' && analysisData) {
-    return <TextualAnalysisResults auditData={analysisData} onNewAnalysis={handleNewAnalysis} />;
-  }
 
   return (
     <div className="max-w-2xl mx-auto">

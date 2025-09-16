@@ -160,33 +160,40 @@ export interface EmailData {
 }
 
 export const sendEmail = async (emailData: EmailData) => {
-  if (!resend) {
-    console.warn('Resend API key not configured. Email not sent:', emailData.subject);
-    console.warn('Pour activer l\'envoi d\'emails, ajoutez VITE_RESEND_API_KEY dans votre fichier .env');
-    // En mode développement, on simule l'envoi réussi
-    return { id: 'dev-mode', to: emailData.to, subject: emailData.subject };
-  }
-
+  // Envoi via Supabase Edge Function pour éviter les problèmes CORS
   try {
-    console.log('Tentative d\'envoi d\'email:', {
+    console.log('Tentative d\'envoi d\'email via Supabase:', {
       to: emailData.to,
       subject: emailData.subject,
       from: emailData.from || 'contact@orchestraconnect.fr'
     });
 
-    const { data, error } = await resend.emails.send({
-      from: emailData.from || 'contact@orchestraconnect.fr',
-      to: [emailData.to],
-      subject: emailData.subject,
-      html: emailData.html,
-    });
-
-    if (error) {
-      console.error('Erreur Resend:', error);
-      throw new Error(`Erreur Resend: ${error.message || 'Erreur inconnue'}`);
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.warn('Configuration Supabase manquante pour l\'envoi d\'email');
+      // En mode développement, on simule l'envoi réussi
+      return { id: 'dev-mode', to: emailData.to, subject: emailData.subject };
     }
 
-    console.log('Email envoyé avec succès:', data);
+    const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`
+      },
+      body: JSON.stringify(emailData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Erreur lors de l\'envoi d\'email:', errorData);
+      throw new Error(`Erreur Resend: ${errorData.message || 'Unable to fetch data. The request could not be resolved.'}`);
+    }
+
+    const data = await response.json();
+    console.log('Email envoyé avec succès via Supabase:', data);
     return data;
   } catch (error) {
     console.error('Erreur dans sendEmail:', error);
@@ -195,46 +202,56 @@ export const sendEmail = async (emailData: EmailData) => {
 };
 
 export const sendAuditReportEmail = async (email: string, auditResult: any, leadData: any) => {
+  // Normalisation des données pour gérer les différentes structures
+  const companyName = auditResult?.company_name || leadData?.company || 'Votre entreprise';
+  const sector = auditResult?.sector || auditResult?.company_sector || 'Non spécifié';
+  const businessModel = auditResult?.business_model || auditResult?.businessModel || 'Non spécifié';
+  const score = auditResult?.score || 75;
+  const roiEstimate = auditResult?.roi_estimate || auditResult?.roiEstimate || '300% en 6 mois';
+  const timeSaved = auditResult?.time_saved || auditResult?.timeSaved || '25h/semaine';
+  const specializedAgents = auditResult?.specialized_agents || auditResult?.specializedAgents || [];
+  
   const content = `
     <h1>Votre rapport d'audit est prêt ! 📊</h1>
     
-    <p>Bonjour ${leadData.firstName || leadData.first_name},</p>
+    <p>Bonjour ${leadData.firstName || leadData.first_name || 'Cher prospect'},</p>
     
-    <p>Voici votre rapport d'audit personnalisé pour <strong>${leadData.company}</strong> :</p>
+    <p>Voici votre rapport d'audit personnalisé pour <strong>${companyName}</strong> :</p>
     
     <div class="audit-score">
         <h3>Score d'Automatisation</h3>
-        <div class="score-number">${auditResult.score || 'XX'}%</div>
-        <p>Votre entreprise peut automatiser <strong>${auditResult.score || 'XX'}%</strong> de ses processus</p>
+        <div class="score-number">${score}%</div>
+        <p>Votre entreprise peut automatiser <strong>${score}%</strong> de ses processus</p>
     </div>
     
     <div class="highlight">
         <h3 style="margin-top: 0;">💼 Informations Entreprise</h3>
         <ul>
-            <li><strong>Entreprise :</strong> ${leadData.company}</li>
-            <li><strong>Secteur :</strong> ${auditResult.sector || 'Non spécifié'}</li>
-            <li><strong>Modèle d'affaires :</strong> ${auditResult.business_model || 'Non spécifié'}</li>
+            <li><strong>Entreprise :</strong> ${companyName}</li>
+            <li><strong>Secteur :</strong> ${sector}</li>
+            <li><strong>Modèle d'affaires :</strong> ${businessModel}</li>
         </ul>
     </div>
     
     <div class="recommendations">
         <h3>🎯 Agents IA Recommandés</h3>
-        ${auditResult.specialized_agents?.map((agent: any) => `
+        ${specializedAgents?.length > 0 ? specializedAgents.map((agent: any) => `
             <div class="recommendation-item">
-                <strong>${agent.name}</strong><br>
-                ${agent.description}
+                <strong>${agent.name || 'Agent IA Spécialisé'}</strong><br>
+                ${agent.description || agent.role || 'Agent personnalisé pour votre secteur'}
+                ${agent.business_impact || agent.impact ? `<br><em>Impact: ${agent.business_impact || agent.impact}</em>` : ''}
             </div>
-        `).join('') || '<p>Agents personnalisés en cours d\'analyse...</p>'}
+        `).join('') : '<p>Agents personnalisés en cours d\'analyse pour votre secteur...</p>'}
     </div>
     
     <div class="highlight">
         <h3 style="margin-top: 0;">💰 Estimation ROI</h3>
-        <p>${auditResult.roi_estimate || 'Calcul en cours...'}</p>
+        <p>${roiEstimate}</p>
     </div>
     
     <div class="highlight">
         <h3 style="margin-top: 0;">⏰ Temps Récupéré</h3>
-        <p>${auditResult.time_saved || 'Calcul en cours...'}</p>
+        <p>${timeSaved}</p>
     </div>
     
     <div class="highlight">
