@@ -1,5 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Clock, Smile } from "lucide-react";
 
 const RealTestimonials = () => {
@@ -18,9 +16,7 @@ const RealTestimonials = () => {
         revenue: "+15 000€/an de CA (j'ai pris 8 nouveaux clients)",
         time: "20h/semaine récupérées",
         life: "Je pars désormais à 18h au lieu de 21h"
-      },
-      gradient: "from-blue-500/20 to-cyan-500/20",
-      borderColor: "border-blue-500/30"
+      }
     },
     {
       name: "Marc",
@@ -37,8 +33,6 @@ const RealTestimonials = () => {
         time: "240h/mois économisées sur l'équipe",
         life: "Mes agents sont moins stressés, plus productifs"
       },
-      gradient: "from-green-500/20 to-emerald-500/20",
-      borderColor: "border-green-500/30"
     },
     {
       name: "Lucie",
@@ -54,9 +48,7 @@ const RealTestimonials = () => {
         revenue: "+80% de CA en 6 mois",
         time: "90h/mois récupérées",
         life: "J'ai enfin lancé ma nouvelle collection (un rêve depuis 2 ans)"
-      },
-      gradient: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30"
+      }
     },
     {
       name: "Thomas",
@@ -72,118 +64,113 @@ const RealTestimonials = () => {
         revenue: "+40% de devis signés (réactivité immédiate)",
         time: "100h/mois récupérées",
         life: "Je suis retourné sur le terrain 3 jours/semaine"
-      },
-      gradient: "from-orange-500/20 to-red-500/20",
-      borderColor: "border-orange-500/30"
+      }
     }
   ];
 
   return (
-    <section className="py-20 bg-background">
-      <div className="container mx-auto px-6">
+    <section className="py-20 md:py-32 bg-white">
+      <div className="container mx-auto px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           
           {/* Header */}
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-accent-success text-white border-2 border-black shadow-[2px_2px_0px_#000000]">
-              Témoignages Clients
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            <span className="badge-success mb-6">Témoignages Clients</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4 tracking-tight">
               Des entrepreneurs comme vous témoignent
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Ils étaient sceptiques au début. Aujourd'hui, ils ne pourraient plus s'en passer.
             </p>
           </div>
 
           {/* Testimonials */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {testimonials.map((testimonial, index) => (
-              <Card 
+              <div 
                 key={index}
-                className={`border-2 ${testimonial.borderColor} bg-gradient-to-br ${testimonial.gradient} hover:scale-[1.01] transition-all duration-300`}
+                className="card-interactive animate-fade-in opacity-0 group"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <CardContent className="p-8">
-                  {/* Header */}
-                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 pb-6 border-b-2 border-border">
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-1">
-                        {testimonial.name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.role} • {testimonial.company}
-                      </p>
-                    </div>
-                    <Badge variant="outline" className="mt-2 md:mt-0 border-2">
-                      Client AgentConnect
-                    </Badge>
-                  </div>
-
-                  {/* Before */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-bold text-muted-foreground uppercase mb-3 flex items-center gap-2">
-                      <span className="text-red-500">❌</span> Avant
-                    </h4>
-                    <p className="text-muted-foreground leading-relaxed italic">
-                      "{testimonial.before}"
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 pb-6 border-b border-gray-200">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-1">
+                      {testimonial.name}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {testimonial.role} • {testimonial.company}
                     </p>
                   </div>
+                  <span className="badge-neutral mt-2 md:mt-0">
+                    Client AgentConnect
+                  </span>
+                </div>
 
-                  {/* Agents Used */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-bold text-muted-foreground uppercase mb-3 flex items-center gap-2">
-                      <span className="text-blue-500">🤖</span> Les Agents IA Déployés
-                    </h4>
-                    <div className="space-y-2">
-                      {testimonial.agents.map((agent, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <span className="text-accent-success mt-1">→</span>
-                          <span className="text-sm text-foreground">{agent}</span>
-                        </div>
-                      ))}
+                {/* Before */}
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-gray-500 uppercase mb-3 flex items-center gap-2">
+                    Avant
+                  </h4>
+                  <p className="text-gray-700 leading-relaxed italic">
+                    "{testimonial.before}"
+                  </p>
+                </div>
+
+                {/* Agents Used */}
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-gray-500 uppercase mb-3 flex items-center gap-2">
+                    Les Agents IA Déployés
+                  </h4>
+                  <div className="space-y-2">
+                    {testimonial.agents.map((agent, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <span className="text-green-600 mt-1">→</span>
+                        <span className="text-sm text-gray-900">{agent}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Results */}
+                <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-lg p-6 border border-green-200">
+                  <h4 className="text-sm font-medium text-gray-900 uppercase mb-4 flex items-center gap-2">
+                    ✅ Résultats
+                  </h4>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="flex items-start gap-3">
+                      <TrendingUp className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">Revenus</p>
+                        <p className="text-sm font-semibold text-gray-900">{testimonial.results.revenue}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Clock className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">Temps gagné</p>
+                        <p className="text-sm font-semibold text-gray-900">{testimonial.results.time}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Smile className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">Qualité de vie</p>
+                        <p className="text-sm font-semibold text-gray-900">{testimonial.results.life}</p>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Results */}
-                  <div className="bg-background/80 rounded-lg p-6 border-2 border-accent-success/30">
-                    <h4 className="text-sm font-bold text-foreground uppercase mb-4 flex items-center gap-2">
-                      <span className="text-green-500">✅</span> Résultats
-                    </h4>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <div className="flex items-start gap-3">
-                        <TrendingUp className="w-5 h-5 text-accent-success flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Revenus</p>
-                          <p className="text-sm font-semibold text-foreground">{testimonial.results.revenue}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Temps gagné</p>
-                          <p className="text-sm font-semibold text-foreground">{testimonial.results.time}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Smile className="w-5 h-5 text-accent-warning flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Qualité de vie</p>
-                          <p className="text-sm font-semibold text-foreground">{testimonial.results.life}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
 
           {/* Trust Footer */}
-          <div className="text-center mt-12 p-8 bg-gradient-to-r from-accent-success/10 to-primary/10 rounded-lg border-2 border-accent-success/20">
-            <p className="text-lg font-semibold text-foreground mb-2">
+          <div className="text-center mt-12 p-8 card-premium bg-gradient-to-br from-green-50 to-blue-50">
+            <p className="text-lg font-semibold text-gray-900 mb-2">
               Vous aussi, vous méritez de retrouver du temps
             </p>
-            <p className="text-muted-foreground">
+            <p className="text-gray-700">
               Ces entrepreneurs étaient comme vous il y a 6 mois : débordés, épuisés, sceptiques.<br />
               Aujourd'hui ? Ils travaillent moins. Gagnent plus. Et vivent mieux.
             </p>
