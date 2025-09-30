@@ -14,3 +14,6 @@ CREATE INDEX idx_leads_company_sector ON public.leads(company_sector);
 
 -- Create index on audit_data for JSON queries
 CREATE INDEX idx_leads_audit_data ON public.leads USING GIN (audit_data);
+
+
+
