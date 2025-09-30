@@ -89,8 +89,7 @@ const RealTestimonials = () => {
             {testimonials.map((testimonial, index) => (
               <div 
                 key={index}
-                className="card-interactive animate-fade-in opacity-0 group"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="card-interactive group"
               >
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 pb-6 border-b border-gray-200">

@@ -62,8 +62,7 @@ const PainPoints = () => {
               return (
                 <div 
                   key={index} 
-                  className="card-interactive animate-fade-in opacity-0"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="card-interactive"
                 >
                   <div className="flex flex-col md:flex-row gap-6">
                     {/* Icon & Day */}
@@ -98,7 +97,7 @@ const PainPoints = () => {
           </div>
 
           {/* Emotional Conclusion */}
-          <div className="card-premium bg-gradient-to-br from-green-50 to-blue-50 p-8 md:p-12 animate-fade-in opacity-0" style={{ animationDelay: "500ms" }}>
+          <div className="card-premium bg-gradient-to-br from-green-50 to-blue-50 p-8 md:p-12">
             <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-6 text-center">
               Le pire dans tout ça ?
             </h3>

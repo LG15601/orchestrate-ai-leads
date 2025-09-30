@@ -13,28 +13,28 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           
           {/* Badge */}
-          <div className="mb-6 animate-fade-in opacity-0">
+          <div className="mb-6">
             <span className="badge-neutral">
               ✨ Nouvelle génération d'automatisation
             </span>
           </div>
           
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-[1.1] tracking-tight animate-fade-in opacity-0 animate-delay-100">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-[1.1] tracking-tight">
             Et si vous aviez enfin du temps<br />
             pour <span className="gradient-text">développer vraiment</span><br />
             votre entreprise ?
           </h1>
           
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-in opacity-0 animate-delay-200">
+          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
             Chaque mois, vous perdez <strong>80 à 120 heures</strong> sur des tâches répétitives.
             <br />
             Découvrez combien de temps vous pourriez récupérer avec des employés IA.
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in opacity-0 animate-delay-300">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <button 
               className="btn-primary btn-lg"
               onClick={() => scrollToSection('audit-form')}
@@ -53,7 +53,7 @@ const Hero = () => {
           </div>
           
           {/* Trust Indicators */}
-          <div className="animate-fade-in opacity-0 animate-delay-400">
+          <div>
             <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-gray-600 mb-8">
               <div className="flex items-center gap-2">
                 <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
