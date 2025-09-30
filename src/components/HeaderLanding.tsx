@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 
 const HeaderLanding = () => {
@@ -10,25 +9,40 @@ const HeaderLanding = () => {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm">
-      <div className="container mx-auto px-6">
+    <header className="fixed top-0 left-0 right-0 z-50 glass-header border-b border-gray-200">
+      <div className="container mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between h-16">
           
           {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <Logo size="md" className="shadow-lg" />
-            <h1 className="text-xl font-bold text-black">AgentConnect</h1>
+          <div 
+            className="flex items-center gap-3 cursor-pointer transition-opacity duration-200 hover:opacity-80" 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            <Logo size="md" />
+            <span className="text-lg font-semibold text-gray-900">AgentConnect</span>
           </div>
 
-          {/* CTA Simple */}
-          <Button 
+          {/* CTA Premium */}
+          <button 
             onClick={scrollToAudit}
-            size="lg"
-            className="bg-black text-white hover:bg-gray-800 font-bold px-6 md:px-8 py-2 md:py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+            className="btn-primary btn-md"
           >
-            <span className="hidden md:inline">🚀 AUDIT GRATUIT</span>
-            <span className="md:hidden">AUDIT</span>
-          </Button>
+            <span className="hidden md:inline">Audit Gratuit</span>
+            <span className="md:hidden">Audit</span>
+            <svg 
+              className="w-4 h-4 ml-1" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M13 7l5 5m0 0l-5 5m5-5H6" 
+              />
+            </svg>
+          </button>
 
         </div>
       </div>

@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-
 const Hero = () => {
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
@@ -9,93 +7,85 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen bg-background flex items-center relative overflow-hidden">
+    <section className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center relative overflow-hidden pt-20">
       
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           
+          {/* Badge */}
+          <div className="mb-6 animate-fade-in opacity-0">
+            <span className="badge-neutral">
+              ✨ Nouvelle génération d'automatisation
+            </span>
+          </div>
+          
           {/* Main Heading */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-[1.1] tracking-tight animate-fade-in opacity-0 animate-delay-100">
             Et si vous aviez enfin du temps<br />
-            pour développer{" "}
-            <span className="text-primary">VRAIMENT</span>{" "}
+            pour <span className="gradient-text">développer vraiment</span><br />
             votre entreprise ?
           </h1>
           
           {/* Subtitle */}
-          <p className="text-base md:text-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-slide-up">
-            Chaque mois, vous perdez <strong>80 à 120 heures</strong> sur des tâches répétitives, 
-            administratives ou chronophages. Pendant ce temps, vos concurrents grandissent, 
-            vos clients attendent, et votre vie personnelle en pâtit.
-            <br /><br />
-            <strong>AgentConnect</strong> vous montre exactement combien de temps vous pourriez 
-            récupérer avec des "employés IA" qui travaillent pour vous 24h/24, 
-            sans congés, sans erreurs, et pour le prix d'un déjeuner.
+          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-in opacity-0 animate-delay-200">
+            Chaque mois, vous perdez <strong>80 à 120 heures</strong> sur des tâches répétitives.
+            <br />
+            Découvrez combien de temps vous pourriez récupérer avec des employés IA.
           </p>
-          
-          {/* Statistics - Impact Réel */}
-          <div className="grid md:grid-cols-4 gap-6 mb-12 animate-slide-up max-w-4xl mx-auto">
-            <div className="text-center p-4 bg-accent-success/10 rounded-lg border-2 border-accent-success/20">
-              <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">120h</div>
-              <p className="text-sm text-muted-foreground">récupérées chaque mois</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">(3 semaines de travail)</p>
-            </div>
-            
-            <div className="text-center p-4 bg-primary/10 rounded-lg border-2 border-primary/20">
-              <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">300€</div>
-              <p className="text-sm text-muted-foreground">par employé IA/mois</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">(vs 2500€ employé)</p>
-            </div>
-            
-            <div className="text-center p-4 bg-accent-warning/10 rounded-lg border-2 border-accent-warning/20">
-              <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">48h</div>
-              <p className="text-sm text-muted-foreground">pour déployer</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">(pas de recrutement)</p>
-            </div>
-            
-            <div className="text-center p-4 bg-accent-success/10 rounded-lg border-2 border-accent-success/20">
-              <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">24/7</div>
-              <p className="text-sm text-muted-foreground">travail continu</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">(weekend inclus)</p>
-            </div>
-          </div>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-slide-up">
-            <Button 
-              size="lg" 
-              className="bg-accent-success text-white hover:bg-accent-success/90 px-8 py-6 h-auto text-base font-bold border-2 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200"
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in opacity-0 animate-delay-300">
+            <button 
+              className="btn-primary btn-lg"
               onClick={() => scrollToSection('audit-form')}
             >
-              🚀 DÉCOUVRIR MON POTENTIEL DE TEMPS LIBÉRÉ
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="px-6 py-6 h-auto text-sm border-2"
+              Audit Gratuit en 15 min
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
+            <button 
+              className="btn-ghost btn-lg"
               onClick={() => scrollToSection('ai-explanation')}
             >
-              Voir ce qu'un employé IA peut faire pour moi
-            </Button>
+              Voir comment ça marche
+            </button>
           </div>
           
-          <p className="text-xs text-muted-foreground mb-8 animate-slide-up">
-            ✅ Audit gratuit • ✅ 15 minutes • ✅ Résultat immédiat • ✅ Sans engagement
-          </p>
-          
           {/* Trust Indicators */}
-          <div className="animate-slide-up">
-            <p className="text-sm text-muted-foreground mb-4 font-semibold">
-              Déjà adopté par 40+ PME françaises
+          <div className="animate-fade-in opacity-0 animate-delay-400">
+            <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-gray-600 mb-8">
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                </svg>
+                <span>Sans engagement</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                </svg>
+                <span>Résultat immédiat</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                </svg>
+                <span>100% gratuit</span>
+              </div>
+            </div>
+            
+            <p className="text-sm text-gray-500 mb-4">
+              Déjà adopté par <strong className="text-gray-900">40+ PME françaises</strong>
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-6 opacity-80">
-              <span className="text-sm text-muted-foreground">🏢 Experts-comptables</span>
-              <div className="w-px h-4 bg-border"></div>
-              <span className="text-sm text-muted-foreground">🏘️ Agences immobilières</span>
-              <div className="w-px h-4 bg-border"></div>
-              <span className="text-sm text-muted-foreground">💼 Cabinets de conseil</span>
-              <div className="w-px h-4 bg-border"></div>
-              <span className="text-sm text-muted-foreground">🛒 E-commerces</span>
+            <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-gray-500">
+              <span>Experts-comptables</span>
+              <span className="text-gray-300">•</span>
+              <span>Agences immobilières</span>
+              <span className="text-gray-300">•</span>
+              <span>Cabinets de conseil</span>
+              <span className="text-gray-300">•</span>
+              <span>E-commerces</span>
             </div>
           </div>
         </div>

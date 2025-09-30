@@ -1,3 +1,4 @@
+import ScrollProgress from "@/components/ScrollProgress";
 import HeaderLanding from "@/components/HeaderLanding";
 import Hero from "@/components/Hero";
 import PainPoints from "@/components/PainPoints";
@@ -12,7 +13,8 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen">
+      <ScrollProgress />
       <HeaderLanding />
       <Hero />
       <PainPoints />
