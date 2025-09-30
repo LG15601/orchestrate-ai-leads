@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
+import "./styles/clean.css";
 
 // Protection contre les erreurs d'extensions de navigateur (ex: MetaMask)
 window.addEventListener('error', (event) => {
